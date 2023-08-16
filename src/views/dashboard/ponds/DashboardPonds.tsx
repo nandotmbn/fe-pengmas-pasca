@@ -1,5 +1,5 @@
 import PondCards from "@/components/Cards/PondCards";
-import { Ponds, Users } from "@/services";
+import { Cities, Ponds, Provinces, Users } from "@/services";
 import { CopyOutlined, SearchOutlined } from "@ant-design/icons";
 import { Input, message, Select } from "antd";
 import React, { useEffect, useState } from "react";
@@ -17,8 +17,48 @@ interface IPonds {
 	cityId: string;
 }
 
+interface IProvince {
+	_id: string;
+	provinceName: string;
+	latitude: string;
+	longitude: string;
+}
+
+interface ICity {
+	_id: string;
+	cityName: string;
+	latitude: string;
+	longitude: string;
+}
+
 function DashboardPonds() {
 	const [pondsData, setPondsData] = useState<IPonds[]>();
+	const [provincesData, setProvincesData] = useState<IProvince[]>();
+	const [citiesData, setCitiesData] = useState<ICity[]>();
+	const [selectedProv, setSelectedProv] = useState<String>("");
+	const [selectedCity, setSelectedCity] = useState<String>("");
+
+	const handleChangeProv = (value: string) => {
+		setSelectedProv(value);
+
+		Cities.getAllCitiesByProvinceId({
+			isNotify: false,
+			provinceId: value,
+		}).then((res: any) => {
+			if (!res) return setCitiesData([]);
+			setCitiesData(res.data);
+		});
+	};
+
+	const handleChangeCity = (value: string, label: any) => {
+		setSelectedCity(value);
+		Ponds.getAllPondsByCityId({ cityId: value, isNotify: true }).then(
+			(res: any) => {
+				if (!res) return setPondsData([]);
+				setPondsData(res.data);
+			}
+		);
+	};
 
 	const findPonds = async (pondName: string) => {
 		Ponds.getAllPonds({ isNotify: false, pondsName: pondName }).then(
@@ -29,8 +69,18 @@ function DashboardPonds() {
 		);
 	};
 
+	const findProvince = async (provName: string) => {
+		Provinces.getAllProvinces({ isNotify: false, provinceName: provName }).then(
+			(res: any) => {
+				if (!res) return setProvincesData([]);
+				setProvincesData(res.data);
+			}
+		);
+	};
+
 	useEffect(() => {
 		findPonds("");
+		findProvince("");
 	}, []);
 
 	return (
@@ -48,16 +98,23 @@ function DashboardPonds() {
 			</div>
 			<div className="mb-4">
 				<Select
-					defaultValue="lucy"
-					style={{ width: 120 }}
-					// onChange={handleChange}
-					options={[
-						{ value: "jack", label: "Jack" },
-						{ value: "lucy", label: "Lucy" },
-						{ value: "Yiminghe", label: "yiminghe" },
-						{ value: "disabled", label: "Disabled", disabled: true },
-					]}
+					defaultValue="Pilih Provinsi"
+					style={{ width: 200 }}
+					onChange={handleChangeProv}
+					options={provincesData?.map((prov: IProvince) => {
+						return { value: prov._id, label: prov.provinceName };
+					})}
 				/>
+				{selectedProv && (
+					<Select
+						defaultValue="Pilih Kota"
+						style={{ width: 200 }}
+						onChange={handleChangeCity}
+						options={citiesData?.map((prov: ICity) => {
+							return { value: prov._id, label: prov.cityName };
+						})}
+					/>
+				)}
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
 				{pondsData?.map((pond: IPonds, i: number) => {
