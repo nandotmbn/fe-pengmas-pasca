@@ -1,0 +1,1 @@
+export const markkdownInit = "# Ini Judul \n\n> Ini Quote \n\n1. Satu \n2. Dua \n3. Tiga"

@@ -1,0 +1,15 @@
+.hide-scroll-bar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+.hide-scroll-bar::-webkit-scrollbar {
+	display: none;
+}
+
+.img-crop-modal button.ant-btn-primary {
+	background-color: rgb(100, 100, 255);
+}
+
+.ant-popover-content button.ant-btn-primary {
+	background-color: rgb(100, 100, 255);
+}

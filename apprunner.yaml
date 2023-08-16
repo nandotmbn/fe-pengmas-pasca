@@ -1,0 +1,13 @@
+version: 1.0
+runtime: nodejs14
+build:
+  commands:
+    pre-build:
+      - n 14.18.3
+    build:      
+      - yarn
+      - yarn build
+run: 
+  command: yarn start
+  network:
+    port: 3000
