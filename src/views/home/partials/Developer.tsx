@@ -58,7 +58,7 @@ function Developer() {
 						<div>
 							<Image
 								className="cursor-pointer rounded-full"
-								src="/images/aku_1x1.jpg"
+								src="/images/aku_1x1.png"
 								alt="Logo PENS"
 								width={800}
 								height={800}

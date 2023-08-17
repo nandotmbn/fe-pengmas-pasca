@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Auth } from "@/services";
 import cookiesHandler from "@/utils/storage/cookies";
-import { LoginOutlined } from "@ant-design/icons";
+import { LoadingOutlined, LoginOutlined } from "@ant-design/icons";
 import { Input, message } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,6 +15,7 @@ interface ILoginCred {
 }
 
 function Signup() {
+	const [isLoading, setLoading] = useState<boolean>(false);
 	const router = useRouter();
 	const [passwordConf, setPasswordConf] = useState("");
 	const [cred, _setCred] = useState<ILoginCred>({
@@ -40,13 +41,18 @@ function Signup() {
 		if (passwordConf != cred.password) {
 			return message.info("Password konfirmasi tidak sama");
 		}
+		setLoading(true);
 		Auth.register({
 			data: cred,
 			isNotify: true,
-		}).then((res: any) => {
-			if (!res) return;
-			router.push("/auth/signin");
-		});
+		})
+			.then((res: any) => {
+				if (!res) return setLoading(false);
+				router.push("/auth/signin");
+			})
+			.finally(() => {
+				setLoading(false);
+			});
 	};
 
 	useEffect(() => {
@@ -114,8 +120,11 @@ function Signup() {
 							name="password-conf"
 						/>
 					</div>
-					<button onClick={handleLogin} className="mt-8 w-full bg-gray-100 text-gray-700 rounded-full py-4">
-						<p>Register</p>
+					<button
+						onClick={handleLogin}
+						className="mt-8 w-full bg-gray-100 text-gray-700 rounded-full py-2"
+					>
+						{!isLoading ? <p>Register</p> : <LoadingOutlined />}
 					</button>
 				</div>
 			</div>

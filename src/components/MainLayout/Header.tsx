@@ -3,38 +3,26 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import {
-	CloseCircleFilled,
-	DownOutlined,
-	LoadingOutlined,
-	MenuFoldOutlined,
-} from "@ant-design/icons";
-import {
-	Button,
-	Drawer,
-	DrawerProps,
-	Dropdown,
-	RadioChangeEvent,
-	Space,
-} from "antd";
+import { MenuFoldOutlined } from "@ant-design/icons";
+import { Drawer } from "antd";
 import { useRouter } from "next/router";
+import { Users } from "@/services";
+
+interface IUserData {
+	fullName: string;
+	username: string;
+	apiKey: string;
+}
 
 function HeaderMainLayout() {
-	const [isMobileMenuOpened, setMobileMenuOpened] = useState(false);
 	const router = useRouter();
-	const { pathname, asPath, query } = router;
-	const isId = router.locale == "id";
+	const [userData, setUserData] = useState<IUserData>();
 	const [isOnTop, setOnTop] = useState<Boolean>(true);
 
 	const [open, setOpen] = useState(false);
-	const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
 
 	const showDrawer = () => {
 		setOpen(true);
-	};
-
-	const onChange = (e: RadioChangeEvent) => {
-		setPlacement(e.target.value);
 	};
 
 	const onClose = () => {
@@ -55,6 +43,13 @@ function HeaderMainLayout() {
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
+	}, []);
+
+	useEffect(() => {
+		Users.getMyProfile({ isNotify: false }).then((res: any) => {
+			if (!res) return;
+			setUserData(res.data);
+		});
 	}, []);
 
 	return (
@@ -97,18 +92,29 @@ function HeaderMainLayout() {
 						</div>
 					</a>
 				</div>
-				<div className="flex flex-row gap-2 flex-1 justify-end">
-					<Link href="/auth/signin" className="flex-1">
-						<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
-							Login
-						</div>
-					</Link>
-					<Link href="/auth/signup" className="flex-1">
-						<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
-							Register
-						</div>
-					</Link>
-				</div>
+				{userData?.username ? (
+					<div className="flex flex-row gap-2 flex-1 justify-end">
+						<Link href="/dashboard" className="flex-1 flex-row flex">
+							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
+								{userData.username}
+							</div>
+							<span className="material-symbols-outlined">account_circle</span>
+						</Link>
+					</div>
+				) : (
+					<div className="flex flex-row gap-2 flex-1 justify-end">
+						<Link href="/auth/signin" className="flex-1">
+							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
+								Login
+							</div>
+						</Link>
+						<Link href="/auth/signup" className="flex-1">
+							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
+								Register
+							</div>
+						</Link>
+					</div>
+				)}
 			</div>
 			<div className="flex md:hidden text-2xl relative -top-1">
 				<button onClick={showDrawer}>
@@ -141,18 +147,31 @@ function HeaderMainLayout() {
 							</div>
 						</a>
 					</div>
-					<div className="flex flex-col gap-2 flex-1 justify-end w-full">
-						<Link href="/auth/signin" className="flex-1 border-b-2">
-							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white">
-								Login
-							</div>
-						</Link>
-						<Link href="/auth/signup" className="flex-1 border-b-2">
-							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white">
-								Register
-							</div>
-						</Link>
-					</div>
+					{userData?.username ? (
+						<div className="flex flex-col gap-2 flex-1 justify-end w-full">
+							<Link href="/dashboard" className="flex-1 flex-row flex justify-end">
+								<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
+									{userData.username}
+								</div>
+								<span className="material-symbols-outlined">
+									account_circle
+								</span>
+							</Link>
+						</div>
+					) : (
+						<div className="flex flex-col gap-2 flex-1 justify-end w-full">
+							<Link href="/auth/signin" className="flex-1 border-b-2">
+								<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white">
+									Login
+								</div>
+							</Link>
+							<Link href="/auth/signup" className="flex-1 border-b-2">
+								<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white">
+									Register
+								</div>
+							</Link>
+						</div>
+					)}
 				</div>
 			</Drawer>
 		</nav>

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Auth } from "@/services";
 import cookiesHandler from "@/utils/storage/cookies";
-import { LoginOutlined } from "@ant-design/icons";
+import { LoadingOutlined, LoginOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,6 +14,7 @@ interface ILoginCred {
 }
 
 function Signin() {
+	const [isLoading, setLoading] = useState<boolean>(false);
 	const router = useRouter();
 	const [cred, _setCred] = useState<ILoginCred>({
 		username: "",
@@ -34,14 +35,19 @@ function Signin() {
 	};
 
 	const handleLogin = async () => {
+		setLoading(true);
 		Auth.login({
 			data: cred,
 			isNotify: true,
-		}).then((res: any) => {
-			if (!res) return;
-			cookiesHandler.setCookie("access_token", res.data.access_token, 9999);
-			checkLoggedIn();
-		});
+		})
+			.then((res: any) => {
+				if (!res) return setLoading(false);
+				cookiesHandler.setCookie("access_token", res.data.access_token, 9999);
+				checkLoggedIn();
+			})
+			.finally(() => {
+				setLoading(false);
+			});
 	};
 
 	useEffect(() => {
@@ -91,9 +97,9 @@ function Signin() {
 					</div>
 					<button
 						onClick={handleLogin}
-						className="mt-8 w-full bg-gray-100 text-gray-700 rounded-full py-4"
+						className="mt-8 w-full bg-gray-100 text-gray-700 rounded-full py-2"
 					>
-						<p>Login</p>
+						{!isLoading ? <p>Login</p> : <LoadingOutlined />}
 					</button>
 				</div>
 			</div>
