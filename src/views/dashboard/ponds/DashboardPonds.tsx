@@ -120,7 +120,7 @@ function DashboardPonds() {
 			<div className="mb-4">
 				<div className="flex flex-col">
 					<div className="flex flex-row gap-2 items-center">
-						<label className="text-sm" htmlFor="prov_list">
+						<label className="text-sm w-24" htmlFor="prov_list">
 							Pilih Propinsi
 						</label>
 						<Select
@@ -144,8 +144,8 @@ function DashboardPonds() {
 					</div>
 					{selectedProv && (
 						<div className="flex flex-row gap-2 items-center">
-							<label className="text-sm" htmlFor="prov_list">
-								Pilih Propinsi
+							<label className="text-sm w-24" htmlFor="prov_list">
+								Pilih Kota
 							</label>
 							<Select
 								value={selectedCity}

@@ -40,3 +40,5 @@ export { Ponds } from "./ponds";
 export { Provinces } from "./provinces";
 export { Cities } from "./cities";
 export { Pools } from "./pools";
+export { Sampling } from "./sampling";
+export { Monitoring } from "./monitoring";
