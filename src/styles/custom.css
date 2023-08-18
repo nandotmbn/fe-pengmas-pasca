@@ -13,3 +13,7 @@
 .ant-popover-content button.ant-btn-primary {
 	background-color: rgb(100, 100, 255);
 }
+
+.custom-switch .ant-switch-inner {
+	background-color: rgb(71, 71, 247) !important;
+}

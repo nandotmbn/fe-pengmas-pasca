@@ -1,19 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { Cities, Ponds, Pools, Provinces } from "@/services";
-import AddNewPools from "./partials/AddNewPools";
-import CenterEmpty from "@/components/Empty/CenterEmpty";
-import PoolCards from "@/components/Cards/PoolCards";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { Switch } from "antd";
 import Link from "next/link";
-import { ArrowLeftOutlined, BackwardFilled } from "@ant-design/icons";
-
-interface IUserData {
-	fullName: string;
-	username: string;
-	apiKey: string;
-}
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import MonitoringPanel from "./partials/MonitoringPanel";
+import SamplingPanel from "./partials/SamplingPanel";
 
 interface IPonds {
 	_id: string;
@@ -43,17 +36,21 @@ interface ICity {
 	longitude: string;
 }
 
-function PondsById() {
-	const router = useRouter();
+function PoolsView() {
+	const router = useRouter().query;
+	const { ponds_id, pools_id } = router;
+
 	const [pondData, setPondData] = useState<IPonds>();
-	const [poolData, setPoolData] = useState<IPools[]>();
+	const [poolData, setPoolData] = useState<IPools>();
 	const [cityData, setCityData] = useState<ICity>();
 	const [provinceData, setProvinceData] = useState<IProvince>();
+
+	const [isMonitoring, setMonitoring] = useState<boolean>(true);
 
 	const getPageData = (pondsId: string) => {
 		if (!pondsId) return;
 		Ponds.getPondById({
-			isNotify: true,
+			isNotify: false,
 			pondsId,
 		}).then((res) => {
 			if (!res) return;
@@ -74,9 +71,9 @@ function PondsById() {
 				});
 			});
 
-			Pools.getPoolsByPondId({
-				isNotify: true,
-				pondId: pondsId,
+			Pools.getPoolsById({
+				isNotify: false,
+				poolsId: pools_id as string,
 			}).then((res) => {
 				if (!res) return;
 				setPoolData(res.data);
@@ -85,50 +82,46 @@ function PondsById() {
 	};
 
 	useEffect(() => {
-		getPageData(router?.query?.ponds_id as string);
-	}, [router]);
+		getPageData(ponds_id as string);
+	}, []);
+
 	return (
 		<div className="mt-8 lg:w-full lg:m-auto lg:mt-8 pb-16">
 			<div className="flex flex-col md:flex-row items-start md:items-center gap-4 justify-between w-full">
 				<div className="flex flex-row items-center justify-between md:justify-start w-full gap-4">
-					<Link href="/dashboard/ponds">
+					<Link href={`/dashboard/ponds/${ponds_id}`}>
 						<button className="text-2xl font-bold text-red-600">
 							<ArrowLeftOutlined />
 						</button>
 					</Link>
 					<div className="text-right md:text-left">
-						<h2 className="text-xl font-semibold">{pondData?.pondsName}</h2>
+						<h2 className="text-xl font-semibold">{poolData?.poolsName}</h2>
+						<h2 className="text-base font-semibold">{pondData?.pondsName}</h2>
 						<h4 className="text-sm">{cityData?.cityName}</h4>
 						<h4>{provinceData?.provinceName}</h4>
 					</div>
 				</div>
-				<div className="">
-					<AddNewPools
-						listRefresher={() => getPageData(router?.query?.ponds_id as string)}
-						pondsId={router?.query?.ponds_id as string}
-						pondsName={pondData?.pondsName as string}
-					/>
-				</div>
 			</div>
-
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
-				{poolData?.map((pool: IPools, i: number) => {
-					return (
-						<PoolCards
-							pondsId={router?.query?.ponds_id as string}
-							poolsName={pool.poolsName}
-							_id={pool._id}
-							listRefresher={() =>
-								getPageData(router?.query?.ponds_id as string)
-							}
-							key={i}
-						/>
-					);
-				})}
+			<div className="custom-switch mt-6">
+				<p>Pilih Mode</p>
+				<Switch
+					onChange={(checked) => setMonitoring(checked)}
+					checkedChildren={
+						<div className="w-44 font-bold text-white">
+							<p>Monitoring</p>
+						</div>
+					}
+					unCheckedChildren={
+						<div className="w-44 font-bold text-white">
+							<p>Sampling</p>
+						</div>
+					}
+					defaultChecked
+				/>
 			</div>
-			{!poolData?.length && <CenterEmpty message="Tambak tidak ditemukan" />}
+			{isMonitoring ? <MonitoringPanel poolId={pools_id as string} /> : <SamplingPanel poolId={pools_id as string} />}
 		</div>
 	);
 }
 
-export default PondsById;
+export default PoolsView;

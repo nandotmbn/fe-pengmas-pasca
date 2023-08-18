@@ -1,6 +1,6 @@
 const withImages = require("next-images");
 const removeImports = require("next-remove-imports")();
-const withTM = require("next-transpile-modules")(["react-syntax-highlighter"]);
+const withTM = require("next-transpile-modules")();
 module.exports = withTM(
 	removeImports(
 		withImages({
