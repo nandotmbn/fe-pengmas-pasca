@@ -15,6 +15,7 @@ import {
 import { Line } from "react-chartjs-2";
 import { Monitoring, Sampling } from "@/services";
 import socketIOClient from "socket.io-client";
+import { useRouter } from "next/router";
 
 
 ChartJS.register(
@@ -39,36 +40,6 @@ export const options = {
 		},
 	},
 };
-
-export const data = {
-	datasets: [
-		{
-			label: "Suhu",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(255, 99, 132)",
-			backgroundColor: "rgba(255, 99, 132, 0.5)",
-		},
-		{
-			label: "Oksigen",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(53, 162, 235)",
-			backgroundColor: "rgba(53, 162, 235, 0.5)",
-		},
-		{
-			label: "Salinitas",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(53, 162, 235)",
-			backgroundColor: "rgba(53, 162, 235, 0.5)",
-		},
-		{
-			label: "pH",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(53, 162, 235)",
-			backgroundColor: "rgba(53, 162, 235, 0.5)",
-		},
-	],
-};
-
 interface ISamplingPanel {
 	poolId: string;
 }
@@ -79,6 +50,7 @@ function SamplingPanel(props: ISamplingPanel) {
 	const [salinity, setSalinity] = useState([]);
 	const [pH, setpH] = useState([]);
 	const [temp, setTemp] = useState([]);
+	const router = useRouter()
 
 	const getTodayMonitoring = async () => {
 		const allMonitoring = await Sampling.getTodaySampling({
@@ -102,13 +74,9 @@ function SamplingPanel(props: ISamplingPanel) {
 
 		const date = (`${thisDate.getFullYear()}-${thisDate.getMonth() + 1}-${thisDate.getDate()}`)
 
-		const startOfDay = new Date(
-			new Date(date).toLocaleString()
-		).getTime();
+		const startOfDay = new Date(new Date(date)).getTime();
 
-		const recentTime = new Date(
-			new Date(Date.now()).toLocaleString()
-		).getTime();
+		const recentTime = new Date(Date.now()).getTime();
 
 		const plottedDate: any = [];
 		const plottedTemp: any = [];
@@ -163,6 +131,9 @@ function SamplingPanel(props: ISamplingPanel) {
 
 	useEffect(() => {
 		getTodayMonitoring();
+	}, [router]);
+	
+	useEffect(() => {
 		socketInit()
 	}, []);
 
