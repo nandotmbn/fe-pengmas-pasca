@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 export default function Sponsor() {
 	return (
         <section className="pt-12 pb-12">
@@ -16,11 +17,12 @@ export default function Sponsor() {
             <div className="flex flex-wrap">
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
-                  <img
+                  <Image
                     alt="..."
-                    src={'/images/sponsor/logopens.png'}
+                    src="/images/sponsor/logopens.png"
                     className="shadow-lg rounded-full max-w-full mx-auto"
-                    style={{ maxWidth: "120px" }}
+                    width={800}
+					height={800}
                   />
                   <div className="pt-6 text-center">
                     <h5 className="text-xl font-bold">
@@ -31,11 +33,12 @@ export default function Sponsor() {
               </div>
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
-                  <img
+                  <Image
                     alt="..."
                     src={'/images/logo-aquaculture-pens.png'}
                     className="shadow-lg rounded-full max-w-full mx-auto"
-                    style={{ maxWidth: "120px" }}
+                    width={800}
+					height={800}
                   />
                   <div className="pt-6 text-center">
                     <h5 className="text-xl font-bold">
@@ -49,11 +52,12 @@ export default function Sponsor() {
                   <div>
                     
                   </div>
-                  <img
+                  <Image
                     alt="..."
-                    src={'/images/sponsor/lpdp.png'}
+                    src="/images/sponsor/lpdp.png"
                     className="shadow-lg rounded-full max-w-full mx-auto"
-                    style={{ maxWidth: "120px" }}
+                    width={800}
+					height={800}
                   />
                   <div className="pt-6 text-center">
                     <h5 className="text-xl font-bold">
@@ -64,11 +68,12 @@ export default function Sponsor() {
               </div>
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
-                  <img
+                  <Image
                     alt="..."
-                    src={'/images/sponsor/kemendikbud.png'}
+                    src="/images/sponsor/kemendikbud.png"
                     className="shadow-lg rounded-full max-w-full mx-auto"
-                    style={{ maxWidth: "120px" }}
+                    width={800}
+				    height={800}
                   />
                   <div className="pt-6 text-center">
                     <h5 className="text-xl font-bold">

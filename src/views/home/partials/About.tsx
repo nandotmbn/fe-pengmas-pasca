@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 function About() {
 	return (
@@ -28,10 +29,12 @@ function About() {
 
 			<div className="flex flex-wrap items-center mt-7">
 				<div className="w-full md:w-4/12 ml-auto mr-auto px-4">
-					<img
+					<Image
 						alt="..."
 						className="max-w-full rounded-lg shadow-lg"
-						src={'/images/about_tisas.jpg'}
+						src="/images/about_tisas.jpg"
+						width={800}
+						height={800}
 					/>
 				</div>
 				<div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
@@ -46,8 +49,6 @@ function About() {
 						TISASforINA adalah sebuah platform digital yang dibangun dengan tujuan untuk mendukung penguatan sektor budidaya perairan (akuakultur) Indonesia yang maju dan mandiri. Platform ini dibangun oleh tim Riset Grup Aquacultural Engineering Applied Technology (ACE App-Tech) Politeknik Elektronika Negeri Surabaya dan didanai oleh Direktorat Jenderal Pendidikan Vokasi, Kementerian Pendidikan dan Kebudayaan, Riset dan Teknologi, Republik Indonesia yang dikelola oleh Lembaga Pengelolaan Dana Pendidikan (LPDP) .
 					</p>
 				</div>
-
-
 			</div>
 			<div className="container mx-auto px-4">
 				<div className="items-center flex flex-wrap">
@@ -95,10 +96,12 @@ function About() {
 						</div>
 					</div>
 					<div className="w-full md:w-4/12 ml-auto mr-auto px-4">
-						<img
+						<Image
 							alt="..."
 							className="max-w-full rounded-lg shadow-lg"
-							src={'/images/pengmas.jpg'}
+							src="/images/pengmas.jpg"
+							width={800}
+							height={800}
 						/>
 					</div>
 				</div>
