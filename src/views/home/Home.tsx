@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import About from "./partials/About";
 import Developer from "./partials/Developer";
+import Footer from "./partials/Footer";
+import Sponsor from "./partials/Sponsor";
 
 function HomeViews() {
 	const { locale } = useRouter();
@@ -55,10 +57,14 @@ function HomeViews() {
 					</div>
 				</div>
 			</div>
+			
 			<div id="content" className='flex flex-col items-center justify-center w-full'>
 				<About />
 				<Developer />
+				
 			</div>
+			<Sponsor />
+			<Footer />
 		</div>
 	);
 }
