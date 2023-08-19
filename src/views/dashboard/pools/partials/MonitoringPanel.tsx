@@ -15,7 +15,7 @@ import {
 import { Line } from "react-chartjs-2";
 import { Monitoring } from "@/services";
 import socketIOClient from "socket.io-client";
-
+import moment from "moment";
 
 ChartJS.register(
 	CategoryScale,
@@ -26,19 +26,6 @@ ChartJS.register(
 	Tooltip,
 	Legend
 );
-
-export const options = {
-	responsive: true,
-	plugins: {
-		legend: {
-			position: "top" as const,
-		},
-		title: {
-			display: true,
-			text: "Pemantauan hari ini",
-		},
-	},
-};
 
 export const data = {
 	datasets: [
@@ -74,11 +61,11 @@ interface IMonitoringPanel {
 }
 
 function MonitoringPanel(props: IMonitoringPanel) {
-	const [labels, setLabels] = useState([]);
-	const [oxygen, setOxygen] = useState([]);
-	const [salinity, setSalinity] = useState([]);
-	const [pH, setpH] = useState([]);
-	const [temp, setTemp] = useState([]);
+	const [labels, setLabels] = useState([1, 2, 3, 4, 5]);
+	const [oxygen, setOxygen] = useState([1, 2, 3, 4, 5]);
+	const [salinity, setSalinity] = useState([1, 2, 3, 4, 5]);
+	const [pH, setpH] = useState([1, 2, 3, 4, 5]);
+	const [temp, setTemp] = useState([1, 2, 3, 4, 5]);
 
 	const getTodayMonitoring = async () => {
 		const allMonitoring = await Monitoring.getTodayMonitoring({
@@ -88,7 +75,9 @@ function MonitoringPanel(props: IMonitoringPanel) {
 			if (!res) return;
 			return res.data.map((datum: any, i: number) => {
 				const time =
-					Math.round(new Date(datum.updatedAt).getTime() / (1000 * 60 * 60)) * 60 * 60;
+					Math.round(new Date(datum.updatedAt).getTime() / (1000 * 60 * 60)) *
+					60 *
+					60;
 				const d = new Date(0);
 				d.setUTCSeconds(time);
 				return {
@@ -98,17 +87,15 @@ function MonitoringPanel(props: IMonitoringPanel) {
 			});
 		});
 
-		const thisDate = new Date(Date.now())
+		const thisDate = new Date(Date.now());
 
-		const date = (`${thisDate.getFullYear()}-${thisDate.getMonth() + 1}-${thisDate.getDate()}`)
+		const date = `${thisDate.getFullYear()}-${
+			thisDate.getMonth() + 1
+		}-${thisDate.getDate()}`;
 
-		const startOfDay = new Date(
-			new Date(date).toLocaleString()
-		).getTime();
+		const startOfDay = new Date(new Date(date)).getTime();
 
-		const recentTime = new Date(
-			new Date(Date.now()).toLocaleString()
-		).getTime();
+		const recentTime = new Date(Date.now()).getTime();
 
 		const plottedDate: any = [];
 		const plottedTemp: any = [];
@@ -146,32 +133,44 @@ function MonitoringPanel(props: IMonitoringPanel) {
 			plottedTemp.push(lastTemp);
 		}
 
-		setLabels(plottedDate);
-		setOxygen(plottedOxy)
-		setSalinity(plottedSal)
-		setTemp(plottedTemp)
+		setOxygen(plottedOxy);
+		setSalinity(plottedSal);
+		setTemp(plottedTemp);
 		setpH(plottedPH);
+		setLabels(plottedDate);
+
+		// alert(plottedPH[23])
 	};
 
 	const socketInit = () => {
 		const socket = socketIOClient("wss://dev-api-2023.aquaculturepens.com");
 		socket.on("Monitor:" + props.poolId, async (data) => {
-			console.log(data)
-			getTodayMonitoring();
+			// getTodayMonitoring();
 		});
 	};
 
 	useEffect(() => {
 		getTodayMonitoring();
-		socketInit()
+		socketInit();
 	}, []);
 
 	return (
 		<div className="mt-8 w-full">
 			<Line
-				options={options}
+				options={{
+					responsive: true,
+					plugins: {
+						legend: {
+							position: "top" as const,
+						},
+						title: {
+							display: true,
+							text: "Pemantauan hari ini",
+						},
+					},
+				}}
 				data={{
-					datasets:  [
+					datasets: [
 						{
 							label: "Suhu",
 							data: temp,
