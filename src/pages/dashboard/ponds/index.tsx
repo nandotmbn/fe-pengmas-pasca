@@ -18,7 +18,7 @@ export default function Auth() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<DashboardLayout>
-        <DashboardPonds />
+				<DashboardPonds />
 			</DashboardLayout>
 		</>
 	);
