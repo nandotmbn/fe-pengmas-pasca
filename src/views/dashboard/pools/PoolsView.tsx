@@ -83,7 +83,7 @@ function PoolsView() {
 
 	useEffect(() => {
 		getPageData(ponds_id as string);
-	}, []);
+	}, [router]);
 
 	return (
 		<div className="mt-8 lg:w-full lg:m-auto lg:mt-8 pb-16">
