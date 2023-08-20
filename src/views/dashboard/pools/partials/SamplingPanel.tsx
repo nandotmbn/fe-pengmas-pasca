@@ -2,71 +2,10 @@
 import { DatePicker, Switch } from "antd";
 import React, { useEffect, useState } from "react";
 
-import {
-	Chart as ChartJS,
-	CategoryScale,
-	LinearScale,
-	PointElement,
-	LineElement,
-	Title,
-	Tooltip,
-	Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-import { Monitoring, Sampling } from "@/services";
+import { Sampling } from "@/services";
+import RecordTable from "@/components/RecordTable";
 import socketIOClient from "socket.io-client";
-
-ChartJS.register(
-	CategoryScale,
-	LinearScale,
-	PointElement,
-	LineElement,
-	Title,
-	Tooltip,
-	Legend
-);
-
-export const options = {
-	responsive: true,
-	plugins: {
-		legend: {
-			position: "top" as const,
-		},
-		title: {
-			display: true,
-			text: "Pemantauan hari ini",
-		},
-	},
-};
-
-export const data = {
-	datasets: [
-		{
-			label: "Suhu",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(255, 99, 132)",
-			backgroundColor: "rgba(255, 99, 132, 0.5)",
-		},
-		{
-			label: "Oksigen",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(53, 162, 235)",
-			backgroundColor: "rgba(53, 162, 235, 0.5)",
-		},
-		{
-			label: "Salinitas",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(53, 162, 235)",
-			backgroundColor: "rgba(53, 162, 235, 0.5)",
-		},
-		{
-			label: "pH",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(53, 162, 235)",
-			backgroundColor: "rgba(53, 162, 235, 0.5)",
-		},
-	],
-};
+import RecordChart from "@/components/RecordChart";
 
 interface ISamplingPanel {
 	poolId: string;
@@ -75,6 +14,7 @@ interface ISamplingPanel {
 function SamplingPanel(props: ISamplingPanel) {
 	const [startDate, setStartDate] = useState<string>("");
 	const [endDate, setEndDate] = useState<string>("");
+	const [records, setRecords] = useState([]);
 	const [labels, setLabels] = useState([]);
 	const [oxygen, setOxygen] = useState([]);
 	const [salinity, setSalinity] = useState([]);
@@ -87,6 +27,8 @@ function SamplingPanel(props: ISamplingPanel) {
 			poolsId: props.poolId,
 		}).then((res) => {
 			if (!res) return;
+
+			setRecords(res.data);
 			return res.data.map((datum: any, i: number) => {
 				const time =
 					Math.round(
@@ -164,21 +106,19 @@ function SamplingPanel(props: ISamplingPanel) {
 		const samplingDataAtSelectedDate = await Sampling.getAllSampling({
 			isNotify: false,
 			poolsId: props.poolId,
-			from: startDate
-				? startDate
-				: new Date(new Date(startDate).getTime() + 86400000)
-						.toISOString()
-						.split("T")[0],
-			to: endDate
-				? endDate
-				: new Date(new Date(startDate).getTime() + 86400000)
-						.toISOString()
-						.split("T")[0],
+			from: startDate,
+			to:
+				endDate ||
+				new Date(new Date(startDate).getTime() + 86400000)
+					.toISOString()
+					.split("T")[0],
 			limit: 9999,
 			page: 1,
-			newestTime: "false",
+			newestTime: "true",
 		}).then((res) => {
 			if (!res) return [];
+
+			setRecords(res.data);
 			return res.data.map((datum: any, i: number) => {
 				const time =
 					Math.round(
@@ -234,21 +174,18 @@ function SamplingPanel(props: ISamplingPanel) {
 	};
 
 	useEffect(() => {
+		setRecords([]);
 		if (startDate || endDate) {
 			getSamplingByDate();
-			options.plugins.title.text = `Pemantauan tanggal ${startDate} ${
-				endDate ?? "-" + new Date().getDate()
-			}`;
 		} else {
 			getTodayMonitoring();
 			socketInit();
-			options.plugins.title.text = `Pemantauan hari ini`;
 		}
 	}, [startDate, endDate]);
 
 	return (
 		<div className="mt-8 w-full">
-			<div className="space-x-4 mb-4">
+			<div className="space-y-2 md:space-x-4 mb-4">
 				<DatePicker
 					onChange={(date, dateString) => {
 						setStartDate(dateString);
@@ -266,34 +203,16 @@ function SamplingPanel(props: ISamplingPanel) {
 					allowClear
 				/>
 			</div>
-			<Line
-				options={options}
-				data={{
-					datasets: [
-						{
-							label: "Suhu",
-							data: temp,
-							backgroundColor: "rgba(255, 0, 0, 0.5)",
-						},
-						{
-							label: "Oksigen",
-							data: oxygen,
-							backgroundColor: "rgba(0, 255, 0, 0.5)",
-						},
-						{
-							label: "Salinitas",
-							data: salinity,
-							backgroundColor: "rgba(0, 0, 255, 0.5)",
-						},
-						{
-							label: "pH",
-							data: pH,
-							backgroundColor: "rgba(255, 255, 0, 0.5)",
-						},
-					],
-					labels: labels,
-				}}
+			<RecordChart
+				labels={labels}
+				temp={temp}
+				oxygen={oxygen}
+				salinity={salinity}
+				pH={pH}
 			/>
+			<div className="mt-4 overflow-scroll">
+				<RecordTable records={records} />
+			</div>
 		</div>
 	);
 }

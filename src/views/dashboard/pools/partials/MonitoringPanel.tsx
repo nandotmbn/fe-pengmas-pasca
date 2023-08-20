@@ -1,75 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client";
-
 import { Switch, DatePicker } from "antd";
 import React, { useEffect, useState } from "react";
 
-import {
-	Chart as ChartJS,
-	CategoryScale,
-	LinearScale,
-	PointElement,
-	LineElement,
-	Title,
-	Tooltip,
-	Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
 import { Monitoring } from "@/services";
+import RecordTable from "@/components/RecordTable";
 import socketIOClient from "socket.io-client";
-import { string } from "joi";
-
-ChartJS.register(
-	CategoryScale,
-	LinearScale,
-	PointElement,
-	LineElement,
-	Title,
-	Tooltip,
-	Legend
-);
-
-export const options = {
-	responsive: true,
-	plugins: {
-		legend: {
-			position: "top" as const,
-		},
-		title: {
-			display: true,
-			text: "Pemantauan hari ini",
-		},
-	},
-};
-
-export const data = {
-	datasets: [
-		{
-			label: "Suhu",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(255, 99, 132)",
-			backgroundColor: "rgba(255, 99, 132, 0.5)",
-		},
-		{
-			label: "Oksigen",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(53, 162, 235)",
-			backgroundColor: "rgba(53, 162, 235, 0.5)",
-		},
-		{
-			label: "Salinitas",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(53, 162, 235)",
-			backgroundColor: "rgba(53, 162, 235, 0.5)",
-		},
-		{
-			label: "pH",
-			data: [1, 2, 3, 4, 5, 6, 7, 7],
-			borderColor: "rgb(53, 162, 235)",
-			backgroundColor: "rgba(53, 162, 235, 0.5)",
-		},
-	],
-};
+import RecordChart from "@/components/RecordChart";
 
 interface IMonitoringPanel {
 	poolId: string;
@@ -78,6 +14,7 @@ interface IMonitoringPanel {
 function MonitoringPanel(props: IMonitoringPanel) {
 	const [startDate, setStartDate] = useState<string>("");
 	const [endDate, setEndDate] = useState<string>("");
+	const [records, setRecords] = useState([]);
 	const [labels, setLabels] = useState([]);
 	const [oxygen, setOxygen] = useState([]);
 	const [salinity, setSalinity] = useState([]);
@@ -90,6 +27,8 @@ function MonitoringPanel(props: IMonitoringPanel) {
 			poolsId: props.poolId,
 		}).then((res) => {
 			if (!res) return;
+
+			setRecords(res.data);
 			return res.data.map((datum: any, i: number) => {
 				const time =
 					Math.round(
@@ -168,18 +107,18 @@ function MonitoringPanel(props: IMonitoringPanel) {
 			isNotify: false,
 			poolsId: props.poolId,
 			from: startDate,
-			to: endDate
-				? endDate
-				: new Date(new Date(startDate).getTime() + 86400000)
-						.toISOString()
-						.split("T")[0],
+			to:
+				endDate ||
+				new Date(new Date(startDate).getTime() + 86400000)
+					.toISOString()
+					.split("T")[0],
 			limit: 9999,
 			page: 1,
 			newestTime: "false",
 		}).then((res) => {
 			if (!res) return [];
-			console.log(res);
 
+			setRecords(res.data);
 			return res.data.map((datum: any, i: number) => {
 				const time =
 					Math.round(
@@ -235,21 +174,18 @@ function MonitoringPanel(props: IMonitoringPanel) {
 	};
 
 	useEffect(() => {
+		setRecords([]);
 		if (startDate || endDate) {
 			getMonitoringByDate();
-			options.plugins.title.text = `Pemantauan tanggal ${startDate} ${
-				endDate ?? "-" + new Date().getDate()
-			}`;
 		} else {
 			getTodayMonitoring();
 			socketInit();
-			options.plugins.title.text = `Pemantauan hari ini`;
 		}
 	}, [startDate, endDate]);
 
 	return (
 		<div className="mt-8 w-full">
-			<div className="space-x-4 mb-4">
+			<div className="space-y-2 md:space-x-4 mb-4">
 				<DatePicker
 					onChange={(date, dateString) => {
 						setStartDate(dateString);
@@ -257,7 +193,7 @@ function MonitoringPanel(props: IMonitoringPanel) {
 					placeholder="Tanggal Awal"
 					allowClear
 				/>
-				<span>-</span>
+				<span className="hidden md:inline">-</span>
 				<DatePicker
 					onChange={(date, dateString) => {
 						setEndDate(dateString);
@@ -267,34 +203,16 @@ function MonitoringPanel(props: IMonitoringPanel) {
 					allowClear
 				/>
 			</div>
-			<Line
-				options={options}
-				data={{
-					datasets: [
-						{
-							label: "Suhu",
-							data: temp,
-							backgroundColor: "rgba(255, 0, 0, 0.5)",
-						},
-						{
-							label: "Oksigen",
-							data: oxygen,
-							backgroundColor: "rgba(0, 255, 0, 0.5)",
-						},
-						{
-							label: "Salinitas",
-							data: salinity,
-							backgroundColor: "rgba(0, 0, 255, 0.5)",
-						},
-						{
-							label: "pH",
-							data: pH,
-							backgroundColor: "rgba(255, 255, 0, 0.5)",
-						},
-					],
-					labels: labels,
-				}}
+			<RecordChart
+				labels={labels}
+				temp={temp}
+				oxygen={oxygen}
+				salinity={salinity}
+				pH={pH}
 			/>
+			<div className="mt-4 overflow-scroll md:overflow-hidden">
+				<RecordTable records={records} />
+			</div>
 		</div>
 	);
 }
