@@ -10,7 +10,7 @@ export default function Sponsor() {
                     Featured Sponsors
                 </h2>
                 <p className="text-lg leading-relaxed m-4 text-gray-600">
-                    Pelaksanaan kegiatan ini didukung oleh beberapa lembaga 
+                    Pelaksanaan kegiatan ini didukung oleh beberapa lembaga
                 </p>
               </div>
             </div>
@@ -18,11 +18,11 @@ export default function Sponsor() {
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
                   <Image
-                    alt="..."
+                    alt="logo pens"
                     src="/images/sponsor/logopens.png"
-                    className="shadow-lg rounded-full max-w-full mx-auto"
-                    width={800}
-					height={800}
+                    className="shadow-lg rounded-full mx-auto"
+                    width={150}
+					height={150}
                   />
                   <div className="pt-6 text-center">
                     <h5 className="text-xl font-bold">
@@ -34,11 +34,11 @@ export default function Sponsor() {
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
                   <Image
-                    alt="..."
+                    alt="logo aquaculture"
                     src={'/images/logo-aquaculture-pens.png'}
-                    className="shadow-lg rounded-full max-w-full mx-auto"
-                    width={800}
-					height={800}
+                    className="shadow-lg rounded-full mx-auto"
+                    width={150}
+					height={150}
                   />
                   <div className="pt-6 text-center">
                     <h5 className="text-xl font-bold">
@@ -50,14 +50,14 @@ export default function Sponsor() {
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
                   <div>
-                    
+
                   </div>
                   <Image
-                    alt="..."
+                    alt="Logo LPDP"
                     src="/images/sponsor/lpdp.png"
-                    className="shadow-lg rounded-full max-w-full mx-auto"
-                    width={800}
-					height={800}
+                    className="shadow-lg rounded-full mx-auto"
+                    width={150}
+					height={150}
                   />
                   <div className="pt-6 text-center">
                     <h5 className="text-xl font-bold">
@@ -69,11 +69,11 @@ export default function Sponsor() {
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
                   <Image
-                    alt="..."
+                    alt="Logo Kemendikbud"
                     src="/images/sponsor/kemendikbud.png"
-                    className="shadow-lg rounded-full max-w-full mx-auto"
-                    width={800}
-				    height={800}
+                    className="shadow-lg rounded-full mx-auto"
+                    width={150}
+				    height={150}
                   />
                   <div className="pt-6 text-center">
                     <h5 className="text-xl font-bold">

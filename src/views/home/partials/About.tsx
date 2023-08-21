@@ -40,12 +40,12 @@ function About() {
 				<div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
 
 					<h3 className="text-3xl mb-2 font-semibold leading-normal">
-						Tentang kami
+						Tentang Kami
 					</h3>
-					<p className="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700">
+					<p className="text-lg leading-relaxed mt-4 mb-4 text-gray-700">
 
 					</p>
-					<p className="text-lg font-light leading-relaxed mt-0 mb-4 text-gray-700">
+					<p className="text-lg leading-relaxed mt-0 mb-4 text-gray-700">
 						TISASforINA adalah sebuah platform digital yang dibangun dengan tujuan untuk mendukung penguatan sektor budidaya perairan (akuakultur) Indonesia yang maju dan mandiri. Platform ini dibangun oleh tim Riset Grup Aquacultural Engineering Applied Technology (ACE App-Tech) Politeknik Elektronika Negeri Surabaya dan didanai oleh Direktorat Jenderal Pendidikan Vokasi, Kementerian Pendidikan dan Kebudayaan, Riset dan Teknologi, Republik Indonesia yang dikelola oleh Lembaga Pengelolaan Dana Pendidikan (LPDP) .
 					</p>
 				</div>
@@ -56,7 +56,7 @@ function About() {
 						<div className="md:pr-12">
 
 							<h3 className="text-3xl font-semibold">
-								About TISASforINA
+								Tentang TISASforINA
 							</h3>
 							<p className="mt-4 text-lg leading-relaxed text-gray-600">
 								TISASforINA merupakan singkatan dari Totally Integrated Smart Aquaculture System for Indonesia TISASforINA adalah sebuah platform online yang menjadi tempat bertemu pengusaha, peneliti, pengajar, komunitas akuakultur (budidaya air) serta pemerintah untuk mempromosikan potensi akuakultur Indonesia.

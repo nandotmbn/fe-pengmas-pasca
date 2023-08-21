@@ -91,6 +91,11 @@ function HeaderMainLayout() {
 							Kontak
 						</div>
 					</a>
+					<a href="/prediction/PredictionForm" className="flex-1">
+						<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
+							Prediksi
+						</div>
+					</a>
 				</div>
 				{userData?.username ? (
 					<div className="flex flex-row gap-2 flex-1 justify-end">
@@ -144,6 +149,11 @@ function HeaderMainLayout() {
 						<a href="#contact" className="flex-1 border-b-2">
 							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white">
 								Kontak
+							</div>
+						</a>
+						<a href="" className="flex-1 border-b-2">
+							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white">
+								Prediksi
 							</div>
 						</a>
 					</div>
