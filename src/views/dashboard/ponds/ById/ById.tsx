@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { Cities, Ponds, Pools, Provinces } from "@/services";
 import AddNewPools from "./partials/AddNewPools";
 import CenterEmpty from "@/components/Empty/CenterEmpty";
@@ -97,14 +96,18 @@ function PondsById() {
 						</button>
 					</Link>
 					<div className="text-right md:text-left">
-						<h2 className="text-xl font-semibold">{pondData?.pondsName}</h2>
+						<h2 className="text-xl font-semibold">
+							{pondData?.pondsName}
+						</h2>
 						<h4 className="text-sm">{cityData?.cityName}</h4>
 						<h4>{provinceData?.provinceName}</h4>
 					</div>
 				</div>
 				<div className="">
 					<AddNewPools
-						listRefresher={() => getPageData(router?.query?.ponds_id as string)}
+						listRefresher={() =>
+							getPageData(router?.query?.ponds_id as string)
+						}
 						pondsId={router?.query?.ponds_id as string}
 						pondsName={pondData?.pondsName as string}
 					/>
@@ -126,7 +129,9 @@ function PondsById() {
 					);
 				})}
 			</div>
-			{!poolData?.length && <CenterEmpty message="Tambak tidak ditemukan" />}
+			{!poolData?.length && (
+				<CenterEmpty message="Tambak tidak ditemukan" />
+			)}
 		</div>
 	);
 }
