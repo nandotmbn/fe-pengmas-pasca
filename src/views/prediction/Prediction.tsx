@@ -2604,12 +2604,13 @@ const Prediction = () => {
 						hasil = "Out of Prediction";
 						keterangan = "Undefined";
 					}
-					var list = document.createElement('ul');
-					list.innerHTML = "<h4>" + hasil + "<br>" + keterangan + "</h4>";
+
 					var resultElement = document.getElementById("result");
 
 					if (resultElement !== null) {
-						resultElement.appendChild(list);
+						var newValue =  "<h4>" + hasil + "<br>" + keterangan + "</h4>";
+
+						resultElement.innerHTML = newValue;
 					} else {
 						console.error("Result element not found.");
 					}
@@ -2633,11 +2634,29 @@ const Prediction = () => {
 					<form onSubmit={handleSubmit} id="prediksiForm" className="w-96">
 						<h2 className="text-2xl font-semibold mb-6">Prediksi Kualitas Air</h2>
 						<div className="mb-4">
+							<label htmlFor="city_id" className="block text-gray-700 font-medium mb-2">
+								Pilih Kota
+							</label>
+							<select
+								className="px-4 py-2 border rounded w-full focus:outline-none focus:border-blue-500"
+								id="city_id"
+								name="city_id"
+							>
+								<option value="" disabled selected>Pilih Kota</option>
+								<option value="1">Bali</option>
+								<option value="2">Probolinggo</option>
+								<option value="3">Bulukumba</option>
+								<option value="4">Gresik</option>
+								<option value="3">Garut</option>
+								{/* Add more options for other cities */}
+							</select>
+						</div>
+						<div className="mb-4">
 							<label htmlFor="do_oksigen" className="block text-gray-700 font-medium mb-2">
 								Dissolved Oxygen (DO)
 							</label>
 							<input
-								type="text"
+								type="number"
 								className="px-4 py-2 border rounded w-full focus:outline-none focus:border-blue-500"
 								id="do_oksigen"
 								placeholder="Masukkan Nilai DO"
@@ -2648,7 +2667,7 @@ const Prediction = () => {
 								PH
 							</label>
 							<input
-								type="text"
+								type="number"
 								className="px-4 py-2 border rounded w-full focus:outline-none focus:border-blue-500"
 								id="ph"
 								placeholder="Masukkan Nilai PH"
@@ -2659,7 +2678,7 @@ const Prediction = () => {
 								Salinitas
 							</label>
 							<input
-								type="text"
+								type="number"
 								className="px-4 py-2 border rounded w-full focus:outline-none focus:border-blue-500"
 								id="salinitas"
 								placeholder="Masukkan Nilai Salinitas"
@@ -2670,25 +2689,17 @@ const Prediction = () => {
 								Suhu
 							</label>
 							<input
-								type="text"
+								type="number"
 								className="px-4 py-2 border rounded w-full focus:outline-none focus:border-blue-500"
 								id="suhu"
 								placeholder="Masukkan Nilai Suhu"
 							/>
 						</div>
-						{/* Similar code for other input fields */}
-						<input
-							type="hidden"
-							className="form-control"
-							value="city_id_value" // Replace with the actual value
-							name="city_id"
-							id="city_id"
-						/>
 						<button
 							type="submit"
 							className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
 						>
-							Prediksi
+							Submit
 						</button>
 					</form>
 					<div className="w-64">
