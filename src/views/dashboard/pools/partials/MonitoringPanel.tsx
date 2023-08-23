@@ -5,17 +5,18 @@ import React, { useEffect, useState } from "react";
 import { Monitoring } from "@/services";
 import RecordTable from "@/components/RecordTable";
 import socketIOClient from "socket.io-client";
-import { useRouter } from 'next/router';
+import {
+	generateCSVFromCollections,
+	downloadGeneratedCsv,
+} from "@/utils/helpers/csv";
 
 import RecordChart from "@/components/RecordChart";
-
 
 interface IMonitoringPanel {
 	poolId: string;
 }
 
 function MonitoringPanel(props: IMonitoringPanel) {
-
 	const [startDate, setStartDate] = useState<string>("");
 	const [endDate, setEndDate] = useState<string>("");
 	const [records, setRecords] = useState([]);
@@ -51,8 +52,9 @@ function MonitoringPanel(props: IMonitoringPanel) {
 
 		const thisDate = new Date(Date.now());
 
-		const date = `${thisDate.getFullYear()}-${thisDate.getMonth() + 1
-			}-${thisDate.getDate()}`;
+		const date = `${thisDate.getFullYear()}-${
+			thisDate.getMonth() + 1
+		}-${thisDate.getDate()}`;
 
 		const startOfDay = new Date(new Date(date).toLocaleString()).getTime();
 
@@ -177,49 +179,16 @@ function MonitoringPanel(props: IMonitoringPanel) {
 		});
 	};
 
-	interface Record {
-		createdAt: string; // Adjust the type if needed
-		temperature: number; // Adjust the type if needed
-		oxygen: number; // Adjust the type if needed
-		salinity: number; // Adjust the type if needed
-		acidity: number; // Adjust the type if needed
+	function handleDownloadClick() {
+		const csvData = generateCSVFromCollections(records);
+		let filename: string = "data_monitoring";
+
+		if (startDate && endDate) filename += `_${startDate}_${endDate}`;
+		else if (startDate) filename += `_${startDate}`;
+		else filename += `_${new Date().toISOString().split("T")[0]}`;
+		filename += ".csv";
+		downloadGeneratedCsv(csvData, filename);
 	}
-
-
-	function generateCSVData(records: Record[]): string {
-		let csvData = "Waktu,Suhu,Oksigen,Salinitas,pH\n"; // Header kolom
-
-		for (const record of records) {
-		  const rowData = [
-			new Date(record.createdAt).toLocaleTimeString(),
-			record.temperature.toString(),
-			record.oxygen.toString(),
-			record.salinity.toString(),
-			record.acidity.toString(),
-		  ];
-		  csvData += rowData + "\n";
-		}
-
-		return csvData;
-	  }
-
-	  function downloadCSV(data: string, filename: string) {
-		const blob = new Blob([data], { type: 'text/csv;charset=utf-8' });
-		const url = URL.createObjectURL(blob);
-		const link = document.createElement('a');
-		link.href = url;
-		link.setAttribute('download', filename);
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-	  }
-
-	  function handleDownloadClick() {
-		const csvData = generateCSVData(records);
-		const filename = "data_monitoring.csv";
-		downloadCSV(csvData, filename);
-	  }
-
 
 	useEffect(() => {
 		setRecords([]);
@@ -235,29 +204,31 @@ function MonitoringPanel(props: IMonitoringPanel) {
 		<div className="mt-8 w-full">
 			<div className="space-y-2 md:space-x-4 mb-4">
 				<div className="mt-8 w-full">
-					<Button
-						className="bg-green-500 hover:bg-green-400 text-white px-4 rounded-lg"
-						onClick={handleDownloadClick}
-					>
-						Unduh CSV
-					</Button>
-					<div className="space-y-2 md:space-x-4 mb-4">
-						<DatePicker
-							onChange={(date, dateString) => {
-								setStartDate(dateString);
-							}}
-							placeholder="Tanggal Awal"
-							allowClear
-						/>
-						<span className="hidden md:inline">-</span>
-						<DatePicker
-							onChange={(date, dateString) => {
-								setEndDate(dateString);
-							}}
-							placeholder="Tanggal Akhir"
-							disabled={!startDate}
-							allowClear
-						/>
+					<div className="flex justify-between items-start md:items-center">
+						<div className="space-y-2 md:space-x-4 mb-4">
+							<DatePicker
+								onChange={(date, dateString) => {
+									setStartDate(dateString);
+								}}
+								placeholder="Tanggal Awal"
+								allowClear
+							/>
+							<span className="hidden md:inline">-</span>
+							<DatePicker
+								onChange={(date, dateString) => {
+									setEndDate(dateString);
+								}}
+								placeholder="Tanggal Akhir"
+								disabled={!startDate}
+								allowClear
+							/>
+						</div>
+						<Button
+							className="bg-green-500 hover:bg-green-400 text-white px-4 rounded-lg"
+							onClick={handleDownloadClick}
+						>
+							Unduh CSV
+						</Button>
 					</div>
 					<RecordChart
 						labels={labels}

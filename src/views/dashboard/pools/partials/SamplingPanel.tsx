@@ -5,7 +5,10 @@ import React, { useEffect, useState } from "react";
 import { Sampling } from "@/services";
 import RecordTable from "@/components/RecordTable";
 import socketIOClient from "socket.io-client";
-import { useRouter } from 'next/router';
+import {
+	generateCSVFromCollections,
+	downloadGeneratedCsv,
+} from "@/utils/helpers/csv";
 
 import RecordChart from "@/components/RecordChart";
 
@@ -22,7 +25,6 @@ function SamplingPanel(props: ISamplingPanel) {
 	const [salinity, setSalinity] = useState([]);
 	const [pH, setpH] = useState([]);
 	const [temp, setTemp] = useState([]);
-	const router = useRouter()
 
 	const getTodayMonitoring = async () => {
 		const allMonitoring = await Sampling.getTodaySampling({
@@ -53,7 +55,6 @@ function SamplingPanel(props: ISamplingPanel) {
 		const date = `${thisDate.getFullYear()}-${
 			thisDate.getMonth() + 1
 		}-${thisDate.getDate()}`;
-
 
 		const startOfDay = new Date(new Date(date).toLocaleString()).getTime();
 
@@ -175,43 +176,18 @@ function SamplingPanel(props: ISamplingPanel) {
 		});
 	};
 
-	function generateCSVData(records: Record[]): string {
-		let csvData = "Waktu,Suhu,Oksigen,Salinitas,pH\n"; // Header kolom
+	function handleDownloadClick() {
+		const csvData = generateCSVFromCollections(records);
+		let filename: string = "data_sampling";
 
-		for (const record of records) {
-		  const rowData = [
-			new Date(record.createdAt).toLocaleTimeString(),
-			record.temperature.toString(),
-			record.oxygen.toString(),
-			record.salinity.toString(),
-			record.acidity.toString(),
-		  ];
-		  csvData += rowData + "\n";
-		}
-
-		return csvData;
-	  }
-
-	  function downloadCSV(data: string, filename: string) {
-		const blob = new Blob([data], { type: 'text/csv;charset=utf-8' });
-		const url = URL.createObjectURL(blob);
-		const link = document.createElement('a');
-		link.href = url;
-		link.setAttribute('download', filename);
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-	  }
-
-	  function handleDownloadClick() {
-		const csvData = generateCSVData(records);
-		const filename = "data_monitoring.csv";
-		downloadCSV(csvData, filename);
-	  }
-
+		if (startDate && endDate) filename += `_${startDate}_${endDate}`;
+		else if (startDate) filename += `_${startDate}`;
+		else filename += `_${new Date().toISOString().split("T")[0]}`;
+		filename += ".csv";
+		downloadGeneratedCsv(csvData, filename);
+	}
 
 	useEffect(() => {
-
 		setRecords([]);
 		if (startDate || endDate) {
 			getSamplingByDate();
@@ -224,11 +200,11 @@ function SamplingPanel(props: ISamplingPanel) {
 	return (
 		<div className="mt-8 w-full">
 			<Button
-						className="bg-green-500 hover:bg-green-400 text-white px-4 rounded-lg"
-						onClick={handleDownloadClick}
-					>
-						Unduh CSV
-					</Button>
+				className="bg-green-500 hover:bg-green-400 text-white px-4 rounded-lg"
+				onClick={handleDownloadClick}
+			>
+				Unduh CSV
+			</Button>
 			<div className="space-y-2 md:space-x-4 mb-4">
 				<DatePicker
 					onChange={(date, dateString) => {
