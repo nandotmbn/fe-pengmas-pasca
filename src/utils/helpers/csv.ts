@@ -9,8 +9,8 @@ type CollectionType = {
 function generateCSVFromCollections(collections: CollectionType[]) {
   let csvData = "Waktu,Suhu,Oksigen,Salinitas,pH\n";
 
-  for (const record of collections) {
-    const rowData = [new Date(record.createdAt).toLocaleTimeString(), record.temperature.toString(), record.oxygen.toString(), record.salinity.toString(), record.acidity.toString()];
+  for (const collection of collections) {
+    const rowData = [new Date(collection.createdAt).toLocaleTimeString(), collection.temperature.toString(), collection.oxygen.toString(), collection.salinity.toString(), collection.acidity.toString()];
     csvData += rowData + "\n";
   }
 
@@ -18,13 +18,14 @@ function generateCSVFromCollections(collections: CollectionType[]) {
 }
 
 function downloadGeneratedCsv(csvData: string, filename: string) {
-  const element = document.createElement("a");
-  element.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csvData));
-  element.setAttribute("download", filename);
-  element.style.display = "none";
-  document.body.appendChild(element);
-  element.click();
-  document.body.removeChild(element);
+  const blob = new Blob([csvData], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 export { generateCSVFromCollections, downloadGeneratedCsv };
