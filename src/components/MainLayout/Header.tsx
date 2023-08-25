@@ -91,7 +91,7 @@ function HeaderMainLayout() {
 							Kontak
 						</div>
 					</a>
-					<a href="/prediction/prediction" className="flex-1">
+					<a href="/prediction" className="flex-1">
 						<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
 							Prediksi
 						</div>
@@ -151,7 +151,7 @@ function HeaderMainLayout() {
 								Kontak
 							</div>
 						</a>
-						<a href="/prediction/prediction" className="flex-1 border-b-2">
+						<a href="/prediction" className="flex-1 border-b-2">
 							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white">
 								Prediksi
 							</div>

@@ -20,11 +20,13 @@ const Prediction = () => {
 		var suhuElement = document.getElementById('suhu');
 
 		if (doOksigenElement != null && phElement != null && suhuElement != null && salinitasElement != null && cityIdElement != null) {
-			var doOksigenValue = doOksigenElement.textContent;
-			var cityIdValue = cityIdElement.textContent;
-			var phValue = phElement.textContent;
-			var suhuValue = suhuElement.textContent;
-			var salinitasValue = salinitasElement.textContent;
+			var doOksigenValue = doOksigenElement.value;
+			var cityIdValue = cityIdElement.value;
+			var phValue = phElement.value;
+			var suhuValue = suhuElement.value;
+			var salinitasValue = salinitasElement.value;
+
+			console.log("oksigen", doOksigenElement?.value, "id kota", cityIdElement?.value, phValue, suhuValue, salinitasValue)
 
 
 			if (doOksigenValue != null && phValue != null && suhuValue != null && salinitasValue != null && cityIdValue != null) {
