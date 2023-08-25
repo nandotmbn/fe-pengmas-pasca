@@ -1,9 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PondCards from "@/components/Cards/PondCards";
 import CenterEmpty from "@/components/Empty/CenterEmpty";
 import { Ponds, Users } from "@/services";
+import cookiesHandler from "@/utils/storage/cookies";
 import { CopyOutlined } from "@ant-design/icons";
 import { message, Skeleton } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 interface IUserData {
@@ -22,6 +25,7 @@ interface IPonds {
 function DashboardHome() {
 	const [userData, setUserData] = useState<IUserData>();
 	const [pondsData, setPondsData] = useState<IPonds[]>();
+	const router = useRouter();
 
 	function buttonCopy() {
 		navigator.clipboard.writeText(userData?.apiKey as string);
@@ -43,15 +47,19 @@ function DashboardHome() {
 			if (!res) return;
 			setPondsData(res.data);
 		});
-	}
+	};
 
 	useEffect(() => {
 		Users.getMyProfile({ isNotify: false }).then((res: any) => {
-			if (!res) return;
+			if (!res) {
+				cookiesHandler.deleteCookie("access_token");
+				router.replace("/");
+				return;
+			}
 			setUserData(res.data);
 		});
 
-		getPonds()
+		getPonds();
 	}, []);
 
 	return (
@@ -103,15 +111,17 @@ function DashboardHome() {
 			<h2 className="text-2xl font-semibold mt-8">Daftar Tambak</h2>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
 				{pondsData?.map((pond: IPonds, i: number) => {
-					return <PondCards listRefresher={() => getPonds()} {...pond} key={i} />;
+					return (
+						<PondCards listRefresher={() => getPonds()} {...pond} key={i} />
+					);
 				})}
 			</div>
 			<Link href="/dashboard/ponds">
-				<p className="text-blue-600 w-full text-right mt-2">Lihat lainnya. . . .</p>
+				<p className="text-blue-600 w-full text-right mt-2">
+					Lihat lainnya. . . .
+				</p>
 			</Link>
 			{!pondsData?.length && <CenterEmpty message="Tambak tidak ditemukan" />}
-
-			
 		</div>
 	);
 }
