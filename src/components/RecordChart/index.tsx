@@ -81,7 +81,7 @@ const RecordChart: React.FC<RecordChartProps> = ({
 
 	return (
 		<div className="record-chart-container">
-			<Line className="max-h-96" options={options} data={data} />
+			<Line className="max-h-fit" options={options} data={data} />
 			<div className="alert-badges">
 				<AlertBadge value={temp[temp.length - 1]} lowerBound={15} upperBound={30} />
 				<AlertBadge value={oxygen[oxygen.length - 1]} lowerBound={5} upperBound={10} />
