@@ -87,7 +87,7 @@ function DashboardHome() {
 					<div className="flex items-center justify-start gap-4">
 						<p className="text-base font-light">{userData?.apiKey}</p>
 						<button onClick={buttonCopy} className="text-gray-500">
-							<CopyOutlined />
+							<CopyOutlined rev={undefined} />
 						</button>
 					</div>
 				) : (
