@@ -5,7 +5,7 @@ import DashboardMap from "@/views/dashboard/maps/DashboardMap";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Auth() {
+export default function Maps() {
 	return (
 		<>
 			<Head>

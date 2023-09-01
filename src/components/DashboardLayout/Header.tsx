@@ -55,7 +55,7 @@ const DashboardHeader = () => {
 						"accounts"
 					)}`}
 				>
-					<Link href="/dashboard/accounts">
+					<Link href="/dashboard/profile">
 						<p>Akun</p>
 					</Link>
 				</li>
