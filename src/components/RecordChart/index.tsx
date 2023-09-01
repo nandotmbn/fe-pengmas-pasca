@@ -80,13 +80,13 @@ const RecordChart: React.FC<RecordChartProps> = ({
 	};
 
 	return (
-		<div className="record-chart-container">
+		<div className="record-chart-container h-96">
 			<Line className="max-h-fit" options={options} data={data} />
 			<div className="alert-badges">
-				<AlertBadge value={temp[temp.length - 1]} lowerBound={15} upperBound={30} />
-				<AlertBadge value={oxygen[oxygen.length - 1]} lowerBound={5} upperBound={10} />
-				<AlertBadge value={salinity[salinity.length - 1]} lowerBound={20} upperBound={40} />
-				<AlertBadge value={pH[pH.length - 1]} lowerBound={6} upperBound={8} />
+				<AlertBadge value={temp[temp.length - 1]} lowerBound={26} upperBound={32} />
+				<AlertBadge value={oxygen[oxygen.length - 1]} lowerBound={4} upperBound={100} />
+				<AlertBadge value={salinity[salinity.length - 1]} lowerBound={0} upperBound={32} />
+				<AlertBadge value={pH[pH.length - 1]} lowerBound={7} upperBound={8} />
 			</div>
 		</div>
 	);

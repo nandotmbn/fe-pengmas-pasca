@@ -11,6 +11,15 @@ interface AlertBadgeProps {
 const AlertBadge: React.FC<AlertBadgeProps> = ({ value, lowerBound, upperBound }) => {
 	const isBelow = value < lowerBound;
 	const isAbove = value > upperBound;
+	const isNull = value === 0;
+
+	if (isNull){
+		return (
+			<span>
+				{value}
+			</span>
+		);
+	}
 
 	if (isBelow || isAbove) {
 		const alertType = isBelow ? "error" : "warning";
