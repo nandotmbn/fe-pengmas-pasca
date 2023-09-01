@@ -95,7 +95,7 @@ function DashboardHome() {
 					<div className="flex items-center justify-start gap-4">
 						<p className="text-base font-light">{userData?.apiKey}</p>
 						<button onClick={buttonCopy} className="text-gray-500">
-							<CopyOutlined />
+							<CopyOutlined rev={undefined} />
 						</button>
 					</div>
 				) : (
@@ -107,8 +107,12 @@ function DashboardHome() {
 					/>
 				)}
 			</div>
-
-			<h2 className="text-2xl font-semibold mt-8">Daftar Tambak</h2>
+			<div className="mt-8 flex justify-between">
+				<h2 className="text-2xl font-semibold">Daftar Tambak</h2>
+				<Link href='/dashboard/maps'>
+					<p className="text-blue-500">Lihat Map</p>
+				</Link>
+			</div>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
 				{pondsData?.map((pond: IPonds, i: number) => {
 					return (
@@ -122,6 +126,7 @@ function DashboardHome() {
 				</p>
 			</Link>
 			{!pondsData?.length && <CenterEmpty message="Tambak tidak ditemukan" />}
+
 		</div>
 	);
 }

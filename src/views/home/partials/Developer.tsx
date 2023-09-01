@@ -3,10 +3,16 @@ import React from "react";
 
 function Developer() {
 	return (
-		<div id="developer" className="h-screen w-full">
-			<div className="w-full self-center lg:w-9/12 m-auto">
+		<div id="developer" className="w-full">
+			<div className="w-full self-center lg:w-9/12 m-auto pt-12">
 				<div id="advisor" className="flex flex-col">
-					<h2 className="text-center text-2xl mt-4">Pembina</h2>
+					<div className="flex flex-wrap justify-center text-center ">
+						<div className="w-full lg:w-6/12 px-4">
+							<h2 className="text-4xl font-semibold">
+								Pembina
+							</h2>
+						</div>
+					</div>
 					<div className="flex flex-row w-10/12 md:w-6/12 self-center gap-8 mt-2">
 						<div>
 							<Image
@@ -33,7 +39,13 @@ function Developer() {
 					</div>
 				</div>
 				<div id="developers" className="flex flex-col">
-					<h2 className="text-center text-xl mt-4">Pengembang</h2>
+				<div className="flex flex-wrap justify-center text-center mt-4">
+						<div className="w-full lg:w-6/12 px-4">
+							<h2 className="text-4xl font-semibold">
+								Pengembang
+							</h2>
+						</div>
+					</div>
 					<div className="grid grid-cols-2 md:grid-cols-4 w-10/12 self-center gap-8 mt-2">
 						<div>
 							<Image
@@ -84,6 +96,16 @@ function Developer() {
 								height={800}
 							/>
 							<p className="text-center text-xs md:text-sm xl:text-base">Muhammad Aldino Habibullah</p>
+						</div>
+						<div>
+							<Image
+								className="cursor-pointer rounded-full"
+								src="/images/santi.jpg"
+								alt="Santi"
+								width={800}
+								height={800}
+							/>
+							<p className="text-center text-xs md:text-sm xl:text-base">Santi</p>
 						</div>
 					</div>
 				</div>

@@ -82,12 +82,13 @@ function DashboardPonds() {
 	};
 
 	const findProvince = async (provName: string) => {
-		Provinces.getAllProvinces({ isNotify: false, provinceName: provName }).then(
-			(res: any) => {
-				if (!res) return setProvincesData([]);
-				setProvincesData(res.data);
-			}
-		);
+		Provinces.getAllProvinces({
+			isNotify: false,
+			provinceName: provName,
+		}).then((res: any) => {
+			if (!res) return setProvincesData([]);
+			setProvincesData(res.data);
+		});
 	};
 
 	useEffect(() => {
@@ -100,7 +101,9 @@ function DashboardPonds() {
 			<div className="w-full mt-16 flex flex-row justify-between items-center">
 				<h2 className="text-2xl font-semibold">Daftar Tambak</h2>
 				<AddNewPonds
-					listRefresher={() => findPonds(queryName, selectedCity, selectedProv)}
+					listRefresher={() =>
+						findPonds(queryName, selectedCity, selectedProv)
+					}
 					provincesData={provincesData as IProvince[]}
 				/>
 			</div>
@@ -126,10 +129,13 @@ function DashboardPonds() {
 						<Select
 							value={selectedProv}
 							defaultValue="Pilih Provinsi"
-							style={{ width: 200 }}
+							style={{ width: 200, margin: "10px 0" }}
 							onChange={handleChangeProv}
 							options={provincesData?.map((prov: IProvince) => {
-								return { value: prov._id, label: prov.provinceName };
+								return {
+									value: prov._id,
+									label: prov.provinceName,
+								};
 							})}
 						/>
 						<button
@@ -139,7 +145,10 @@ function DashboardPonds() {
 							}}
 							className="text-xl"
 						>
-							<CloseCircleFilled className="text-white bg-red-500 hover:text-red-500 hover:bg-white rounded-full" />
+							<CloseCircleFilled
+								rev="cite"
+								className="text-white bg-red-500 hover:text-red-500 hover:bg-white rounded-full"
+							/>
 						</button>
 					</div>
 					{selectedProv && (
@@ -153,11 +162,20 @@ function DashboardPonds() {
 								style={{ width: 200 }}
 								onChange={handleChangeCity}
 								options={citiesData?.map((prov: ICity) => {
-									return { value: prov._id, label: prov.cityName };
+									return {
+										value: prov._id,
+										label: prov.cityName,
+									};
 								})}
 							/>
-							<button onClick={() => setSelectedCity("")} className="text-xl">
-								<CloseCircleFilled className="text-white bg-red-500 hover:text-red-500 hover:bg-white rounded-full" />
+							<button
+								onClick={() => setSelectedCity("")}
+								className="text-xl"
+							>
+								<CloseCircleFilled
+									rev="cite"
+									className="text-white bg-red-500 hover:text-red-500 hover:bg-white rounded-full"
+								/>
 							</button>
 						</div>
 					)}
@@ -176,7 +194,9 @@ function DashboardPonds() {
 					);
 				})}
 			</div>
-			{!pondsData?.length && <CenterEmpty message="Tambak tidak ditemukan" />}
+			{!pondsData?.length && (
+				<CenterEmpty message="Tambak tidak ditemukan" />
+			)}
 		</div>
 	);
 }

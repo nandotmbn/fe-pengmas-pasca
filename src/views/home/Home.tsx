@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import About from "./partials/About";
 import Developer from "./partials/Developer";
+import Footer from "./partials/Footer";
+import Sponsor from "./partials/Sponsor";
 
 function HomeViews() {
 	const { locale } = useRouter();
@@ -20,7 +22,7 @@ function HomeViews() {
 					backgroundPosition: "center",
 				}}
 			>
-				<div className="relative inset-0 h-full w-full m-auto bg-black bg-opacity-70 flex flex-col items-center justify-center">
+				<div className="relative inset-0 h-full w-full m-auto bg-black bg-opacity-40 flex flex-col items-center justify-center">
 					<div className="w-11/12 lg:w-6/12 items-center flex flex-col justify-center relative -top-10">
 						<div>
 							<Image
@@ -41,7 +43,7 @@ function HomeViews() {
 						<h2 className="text-2xl font-light text-white text-center">
 							Penerapan Teknologi Elektro untuk Teknologi Akuakultur
 						</h2>
-						<a href="#content" className="text-white bg-black px-4 py-2 rounded mt-4">
+						<a href="#content" className="text-white bg-gray-700 px-4 py-2 rounded mt-4">
 							<p>Lanjutkan Baca</p>
 						</a>
 						<div className="flex-row flex items-center">
@@ -49,16 +51,20 @@ function HomeViews() {
 							<p className="z-5 bg-transparent text-white">ATAU</p>
 							<p className="text-white">__________</p>
 						</div>
-						<Link href="/auth/signup" className="text-white bg-black px-4 py-2 rounded mt-4">
+						<Link href="/auth/signup" className="text-white bg-gray-700 px-4 py-2 rounded mt-4">
 							<p>Memulai</p>
 						</Link>
 					</div>
 				</div>
 			</div>
+			
 			<div id="content" className='flex flex-col items-center justify-center w-full'>
 				<About />
 				<Developer />
+				
 			</div>
+			<Sponsor />
+			<Footer />
 		</div>
 	);
 }
