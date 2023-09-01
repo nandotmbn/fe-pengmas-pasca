@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Cities, Ponds, Pools, Provinces } from "@/services";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { Switch } from "antd";
+import { Input, Popconfirm, Switch } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import MonitoringPanel from "./partials/MonitoringPanel";
 import SamplingPanel from "./partials/SamplingPanel";
+import { QrReader } from "react-qr-reader";
 
 interface IPonds {
 	_id: string;
@@ -20,6 +21,7 @@ interface IPools {
 	poolsName: string;
 	userId: string;
 	pondsId: string;
+	deviceName: string;
 }
 
 interface IProvince {
@@ -39,6 +41,9 @@ interface ICity {
 function PoolsView() {
 	const router = useRouter().query;
 	const { ponds_id, pools_id } = router;
+	const [isEdit, setEdit] = useState(false);
+
+	const [willUpdatedBindDevice, setWillBindDevice] = useState<string>("");
 
 	const [pondData, setPondData] = useState<IPonds>();
 	const [poolData, setPoolData] = useState<IPools>();
@@ -46,6 +51,34 @@ function PoolsView() {
 	const [provinceData, setProvinceData] = useState<IProvince>();
 
 	const [isMonitoring, setMonitoring] = useState<boolean>(true);
+
+	const handleBindPools = async () => {
+		Pools.bindPools({
+			isNotify: true,
+			poolsId: pools_id as string,
+			data: {
+				deviceName: willUpdatedBindDevice,
+			},
+		}).then((res) => {
+			if (!res) return;
+			getPageData(ponds_id as string);
+			setEdit(false);
+		});
+	};
+
+	const handleUnbindPools = async () => {
+		Pools.bindPools({
+			isNotify: true,
+			poolsId: pools_id as string,
+			data: {
+				deviceName: "",
+			},
+		}).then((res) => {
+			if (!res) return;
+			getPageData(ponds_id as string);
+			setEdit(false);
+		});
+	};
 
 	const getPageData = (pondsId: string) => {
 		if (!pondsId) return;
@@ -77,6 +110,7 @@ function PoolsView() {
 			}).then((res) => {
 				if (!res) return;
 				setPoolData(res.data);
+				setWillBindDevice(res.data?.deviceName);
 			});
 		});
 	};
@@ -102,6 +136,89 @@ function PoolsView() {
 					</div>
 				</div>
 			</div>
+			<div>
+				<p className="text-lg font-semibold">Perangkat tertaut</p>
+
+				{!poolData?.deviceName ? (
+					isEdit ? (
+						<Input
+							value={willUpdatedBindDevice}
+							onChange={(text) => setWillBindDevice(text.target.value)}
+						/>
+					) : (
+						<p className="italic text-xs">Belum di setel</p>
+					)
+				) : isEdit ? (
+					<Input
+						value={willUpdatedBindDevice}
+						onChange={(text) => setWillBindDevice(text.target.value)}
+					/>
+				) : (
+					<p>{poolData?.deviceName}</p>
+				)}
+
+				{!poolData?.deviceName ? (
+					!isEdit ? (
+						<button
+							onClick={() => setEdit(true)}
+							className="text-white px-2 py-1 bg-green-500 rounded text-sm"
+						>
+							Tambahkan
+						</button>
+					) : (
+						<div className="flex flex-row gap-2 mt-2">
+							<button
+								onClick={handleBindPools}
+								className="text-white px-2 py-1 bg-green-500 rounded text-sm"
+							>
+								Okay
+							</button>
+							<button
+								onClick={() => setEdit(false)}
+								className="text-white px-2 py-1 bg-red-500 rounded text-sm"
+							>
+								Batal
+							</button>
+						</div>
+					)
+				) : !isEdit ? (
+					<div className="flex flex-row gap-2 mt-2">
+						<button
+							onClick={() => setEdit(true)}
+							className="text-white px-2 py-1 bg-green-500 rounded text-sm"
+						>
+							Ganti
+						</button>
+						<Popconfirm
+							title="Lepas perangkat?"
+							description="Apakah anda yakin untuk melepaskan perangkat ini?"
+							onConfirm={handleUnbindPools}
+							okText="Iya"
+							cancelText="Tidak"
+							okButtonProps={{ loading: false }}
+						>
+							<button className="text-white px-2 py-1 bg-red-500 rounded text-sm">
+								Lepas
+							</button>
+						</Popconfirm>
+					</div>
+				) : (
+					<div className="flex flex-row gap-2 mt-2">
+						<button
+							onClick={handleBindPools}
+							className="text-white px-2 py-1 bg-green-500 rounded text-sm"
+						>
+							Okay
+						</button>
+						<button
+							onClick={() => setEdit(false)}
+							className="text-white px-2 py-1 bg-red-500 rounded text-sm"
+						>
+							Batal
+						</button>
+					</div>
+				)}
+			</div>
 			<div className="custom-switch mt-6">
 				<p>Pilih Mode</p>
 				<Switch
@@ -119,7 +236,11 @@ function PoolsView() {
 					defaultChecked
 				/>
 			</div>
-			{isMonitoring ? <MonitoringPanel poolId={pools_id as string} /> : <SamplingPanel poolId={pools_id as string} />}
+			{isMonitoring ? (
+				<MonitoringPanel poolId={pools_id as string} />
+			) : (
+				<SamplingPanel poolId={pools_id as string} />
+			)}
 		</div>
 	);
 }
