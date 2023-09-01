@@ -52,9 +52,8 @@ function SamplingPanel(props: ISamplingPanel) {
 
 		const thisDate = new Date(Date.now());
 
-		const date = `${thisDate.getFullYear()}-${
-			thisDate.getMonth() + 1
-		}-${thisDate.getDate()}`;
+		const date = `${thisDate.getFullYear()}-${thisDate.getMonth() + 1
+			}-${thisDate.getDate()}`;
 
 		const startOfDay = new Date(new Date(date).toLocaleString()).getTime();
 
@@ -199,39 +198,45 @@ function SamplingPanel(props: ISamplingPanel) {
 
 	return (
 		<div className="mt-8 w-full">
-			<Button
-				className="bg-green-500 hover:bg-green-400 text-white px-4 rounded-lg"
-				onClick={handleDownloadClick}
-			>
-				Unduh CSV
-			</Button>
 			<div className="space-y-2 md:space-x-4 mb-4">
-				<DatePicker
-					onChange={(date, dateString) => {
-						setStartDate(dateString);
-					}}
-					placeholder="Tanggal Awal"
-					allowClear
-				/>
-				<span>-</span>
-				<DatePicker
-					onChange={(date, dateString) => {
-						setEndDate(dateString);
-					}}
-					placeholder="Tanggal Akhir"
-					disabled={!startDate}
-					allowClear
-				/>
-			</div>
-			<RecordChart
-				labels={labels}
-				temp={temp}
-				oxygen={oxygen}
-				salinity={salinity}
-				pH={pH}
-			/>
-			<div className="mt-4 overflow-scroll">
-				<RecordTable records={records} />
+				<div className="mt-8 w-full">
+					<div className="flex justify-between items-start md:items-center">
+						<div className="space-y-2 md:space-x-4 mb-4">
+							<DatePicker
+								onChange={(date, dateString) => {
+									setStartDate(dateString);
+								}}
+								placeholder="Tanggal Awal"
+								allowClear
+							/>
+							<span className="hidden md:inline">-</span>
+							<DatePicker
+								onChange={(date, dateString) => {
+									setEndDate(dateString);
+								}}
+								placeholder="Tanggal Akhir"
+								disabled={!startDate}
+								allowClear
+							/>
+						</div>
+						<Button
+							className="bg-green-500 hover:bg-green-400 text-white px-4 rounded-lg"
+							onClick={handleDownloadClick}
+						>
+							Unduh CSV
+						</Button>
+					</div>
+					<RecordChart
+						labels={labels}
+						temp={temp}
+						oxygen={oxygen}
+						salinity={salinity}
+						pH={pH}
+					/>
+					<div className="mt-4 overflow-scroll md:overflow-hidden">
+						<RecordTable records={records} />
+					</div>
+				</div>
 			</div>
 		</div>
 	);
