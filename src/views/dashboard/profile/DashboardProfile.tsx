@@ -6,7 +6,7 @@ import cookiesHandler from "@/utils/storage/cookies";
 import { CopyOutlined } from "@ant-design/icons";
 import { message, Skeleton } from "antd";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter, } from "next/router";
 import React, { useEffect, useState } from "react";
 
 interface IUserData {
@@ -26,6 +26,11 @@ function DashboardProfile() {
 	const [userData, setUserData] = useState<IUserData>();
 	const [pondsData, setPondsData] = useState<IPonds[]>();
 	const router = useRouter();
+
+	function logout() {
+		cookiesHandler.deleteCookie("access_token");
+		router.replace("/");
+	}
 
 	function buttonCopy() {
 		navigator.clipboard.writeText(userData?.apiKey as string);
@@ -93,11 +98,11 @@ function DashboardProfile() {
 					/>
 				)}
 			</div>
-			<Link href="" className="flex-1 border-b-2">
-				<div className="mt-6 w-1/12 rounded-lg font-light text-xs px-2 py-1 bg-blue-600 text-white hover:bg-blue-400">
+			<button onClick={logout} className="flex-1 border-b-2">
+				<div className="mt-6 rounded-lg font-light text-xs px-2 py-1 bg-blue-600 text-white hover:bg-blue-400">
 					Logout
 				</div>
-			</Link>
+			</button>
 		</div>
 	);
 }
