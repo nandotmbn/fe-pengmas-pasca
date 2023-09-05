@@ -1,11 +1,11 @@
 import Head from "next/head";
 import { Inter } from "@next/font/google";
+import DashboardProfile from "@/views/dashboard/profile/DashboardProfile";
 import DashboardLayout from "@/layouts/DashboardLayout";
-import DashboardMap from "@/views/dashboard/maps/DashboardMap";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Maps() {
+export default function Profle() {
 	return (
 		<>
 			<Head>
@@ -18,7 +18,7 @@ export default function Maps() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<DashboardLayout>
-				<DashboardMap />
+				<DashboardProfile/>
 			</DashboardLayout>
 		</>
 	);

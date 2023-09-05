@@ -52,10 +52,10 @@ const DashboardHeader = () => {
 				</li>
 				<li
 					className={`flex-1 text-center rounded py-2 border-b-4 border-blue-800 hover:border-blue-400 ${defineStyleNav(
-						"accounts"
+						"profile"
 					)}`}
 				>
-					<Link href="/dashboard/accounts">
+					<Link href="/dashboard/profile">
 						<p>Akun</p>
 					</Link>
 				</li>
