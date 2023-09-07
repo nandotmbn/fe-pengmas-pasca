@@ -13,36 +13,42 @@ const Prediction = () => {
 		e.preventDefault();
 		let prediksiForm = document.getElementById("prediksiForm");
 
-		var cityIdElement = document.getElementById('city_id');
-		var doOksigenElement = document.getElementById('do_oksigen');
-		var phElement = document.getElementById('ph');
-		var salinitasElement = document.getElementById('salinitas');
-		var suhuElement = document.getElementById('suhu');
+		let cityIdElement = document.getElementById(
+			"city_id"
+		) as HTMLInputElement;
+		let doOksigenElement = document.getElementById(
+			"do_oksigen"
+		) as HTMLInputElement;
+		let phElement = document.getElementById("ph") as HTMLInputElement;
+		let salinitasElement = document.getElementById(
+			"salinitas"
+		) as HTMLInputElement;
+		let suhuElement = document.getElementById("suhu") as HTMLInputElement;
 
 		if (doOksigenElement != null && phElement != null && suhuElement != null && salinitasElement != null && cityIdElement != null) {
-			var doOksigenValue = doOksigenElement.value;
-			var cityIdValue = cityIdElement.value;
-			var phValue = phElement.value;
-			var suhuValue = suhuElement.value;
-			var salinitasValue = salinitasElement.value;
+			let doOksigenValue = doOksigenElement.value;
+			let cityIdValue = cityIdElement.value;
+			let phValue = phElement.value;
+			let suhuValue = suhuElement.value;
+			let salinitasValue = salinitasElement.value;
 
 			console.log("oksigen", doOksigenElement?.value, "id kota", cityIdElement?.value, phValue, suhuValue, salinitasValue)
 
 
 			if (doOksigenValue != null && phValue != null && suhuValue != null && salinitasValue != null && cityIdValue != null) {
-				var doOksigen = parseInt(doOksigenValue);
-				var cityId = parseInt(cityIdValue);
-				var ph = parseInt(phValue);
-				var suhu = parseInt(suhuValue);
-				var salinitas = parseInt(salinitasValue);
+				let doOksigen = parseInt(doOksigenValue);
+				let cityId = parseInt(cityIdValue);
+				let ph = parseInt(phValue);
+				let suhu = parseInt(suhuValue);
+				let salinitas = parseInt(salinitasValue);
 			}
 
 		}
 
-		var hasil;
-		var premise, consequent;
-		var layer1, layer2, layer3, layer4, layer5;
-		var keterangan;
+		let hasil;
+		let premise, consequent;
+		let layer1, layer2, layer3, layer4, layer5;
+		let keterangan;
 
 		if (prediksiForm) {
 			// Now you can safely access properties and methods of prediksiForm
@@ -50,42 +56,42 @@ const Prediction = () => {
 			prediksiForm.addEventListener("submit", (e) => {
 				e.preventDefault();
 
-				if (suhu == null || ph == null || doOksigen == null || salinitas == null) {
+				if (suhuElement.value == null || phElement.value == null || doOksigenElement.value == null || salinitasElement.value == null) {
 					alert("Isi semua inputan");
 				} else {
 
-					var A = [0, 0, 0, 0, 0];
-					var B = [0, 0, 0];
-					var C = [0, 0, 0];
-					var D = [0, 0, 0];
-					var E = [0, 0, 0];
+					let A = [0, 0, 0, 0, 0];
+					let B = [0, 0, 0];
+					let C = [0, 0, 0];
+					let D = [0, 0, 0];
+					let E = [0, 0, 0];
 
-					var a1 = [0.160240497, 0.138201845, 0.114835807, 0.126940988, 0.195004172];
-					var b1 = [2.064168914, 2.064590064, 2.065851726, 2.06613293, 2.058971556];
-					var c1 = [0.900619346, 1.966804058, 3.020441146, 3.997672027, 5.094980002];
-					var a2 = [2.851535585, 1.584881361, 2.886622193];
-					var b2 = [3.243635784, 3.872708497, 2.628171251];
-					var c2 = [1.30859573, 3.517871181, 9.033551005];
-					var a3 = [3.025951548, 0.72719948, 2.5709396];
-					var b3 = [2.78821232, 3.889849683, 3.890075878];
-					var c3 = [2.121431649, 6.794122791, 12.70445063];
-					var a4 = [5.665096107, 1.890815035, 3.869971684];
-					var b4 = [2.720651808, 3.14345515, 2.991878086];
-					var c4 = [19.85374919, 25.74137939, 35.39644177];
-					var a5 = [11.3106081, 11.17664506, 9.992220707];
-					var b5 = [2.093735854, 3.276495043, 1.249626046];
-					var c5 = [1.274181835, 22.19502043, 42.47169884];
+					let a1 = [0.160240497, 0.138201845, 0.114835807, 0.126940988, 0.195004172];
+					let b1 = [2.064168914, 2.064590064, 2.065851726, 2.06613293, 2.058971556];
+					let c1 = [0.900619346, 1.966804058, 3.020441146, 3.997672027, 5.094980002];
+					let a2 = [2.851535585, 1.584881361, 2.886622193];
+					let b2 = [3.243635784, 3.872708497, 2.628171251];
+					let c2 = [1.30859573, 3.517871181, 9.033551005];
+					let a3 = [3.025951548, 0.72719948, 2.5709396];
+					let b3 = [2.78821232, 3.889849683, 3.890075878];
+					let c3 = [2.121431649, 6.794122791, 12.70445063];
+					let a4 = [5.665096107, 1.890815035, 3.869971684];
+					let b4 = [2.720651808, 3.14345515, 2.991878086];
+					let c4 = [19.85374919, 25.74137939, 35.39644177];
+					let a5 = [11.3106081, 11.17664506, 9.992220707];
+					let b5 = [2.093735854, 3.276495043, 1.249626046];
+					let c5 = [1.274181835, 22.19502043, 42.47169884];
 
-					var x = [
-						cityId,
-						doOksigen,
-						ph,
-						suhu,
-						salinitas
+					let x = [
+						cityIdElement.value,
+						doOksigenElement.value,
+						phElement.value,
+						suhuElement.value,
+						salinitasElement.value
 					];
 
 					//consequent parameters
-					var p = [
+					let p = [
 						709.7565503,
 						-72.23457587,
 						-254.8288137,
@@ -492,7 +498,7 @@ const Prediction = () => {
 						218.6062634,
 						-105.2064704
 					];
-					var q = [
+					let q = [
 						1752.76185,
 						1198.982363,
 						591.8361304,
@@ -899,7 +905,7 @@ const Prediction = () => {
 						-61.03176284,
 						151.7186169
 					];
-					var r = [
+					let r = [
 						26.91014616,
 						96.52705533,
 						275.5076138,
@@ -1306,7 +1312,7 @@ const Prediction = () => {
 						301.7198105,
 						-437.2355471
 					];
-					var s = [
+					let s = [
 						-106.081278,
 						-269.5160647,
 						-60.25917871,
@@ -1713,7 +1719,7 @@ const Prediction = () => {
 						-180.3448703,
 						266.1978511
 					];
-					var t = [
+					let t = [
 						-99.29713368,
 						-406.8545767,
 						33.96081333,
@@ -2120,7 +2126,7 @@ const Prediction = () => {
 						53.16222216,
 						-121.0568184
 					];
-					var u = [
+					let u = [
 						709.7431335,
 						-72.35629794,
 						-254.8338269,
@@ -2538,11 +2544,10 @@ const Prediction = () => {
 						D[i] = 1 / (1 + Math.pow(Math.abs((x[3] - c4[i]) / a4[i]), 2 * b4[i]));
 						E[i] = 1 / (1 + Math.pow(Math.abs((x[4] - c5[i]) / a5[i]), 2 * b5[i]));
 					}
-
 					//layer2
-					var layer2 = new Array(405).fill(0);
+					let layer2 = new Array(405).fill(0);
 
-					var counter = 0;
+					let counter = 0;
 					for (let i = 0; i < 5; i++) {
 						for (let j = 0; j < 3; j++) {
 							for (let k = 0; k < 3; k++) {
@@ -2557,10 +2562,10 @@ const Prediction = () => {
 					}
 
 					//layer3
-					var layer3 = new Array(405).fill(0);
+					let layer3 = new Array(405).fill(0);
 
-					var sum_layer2 = 0;
-					for (var i = 0; i < layer2.length; i++) {
+					let sum_layer2 = 0;
+					for (let i = 0; i < layer2.length; i++) {
 						sum_layer2 += layer2[i];
 					}
 					for (let i = 0; i < 405; i++) {
@@ -2568,7 +2573,7 @@ const Prediction = () => {
 					}
 
 					//layer4
-					var intro_layer4 = new Array(405).fill(0);
+					let intro_layer4 = new Array(405).fill(0);
 
 					for (let i = 0; i < 405; i++) {
 						intro_layer4[i] =
@@ -2586,7 +2591,7 @@ const Prediction = () => {
 					//layer5
 					layer5 = 0;
 
-					for (var i = 0; i < layer4.length; i++) {
+					for (let i = 0; i < layer4.length; i++) {
 						layer5 += layer4[i];
 					}
 
@@ -2607,10 +2612,10 @@ const Prediction = () => {
 						keterangan = "Undefined";
 					}
 
-					var resultElement = document.getElementById("result");
+					let resultElement = document.getElementById("result");
 
 					if (resultElement !== null) {
-						var newValue =  "<h4>" + hasil + "<br>" + keterangan + "</h4>";
+						let newValue =  "<h4>" + hasil + "<br>" + keterangan + "</h4>";
 
 						resultElement.innerHTML = newValue;
 					} else {

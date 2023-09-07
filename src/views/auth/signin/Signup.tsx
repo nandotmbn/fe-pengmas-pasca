@@ -65,9 +65,9 @@ function Signup() {
 				<h2 className="text-2xl font-light text-gray-500">Register</h2>
 				<Link
 					href="/auth/signin"
-					className="items-center flex flex-row gap-2 items-center text-blue-800"
+					className="flex flex-row gap-2 items-center text-blue-800"
 				>
-					<p>Login</p> <LoginOutlined />
+					<p>Login</p> <LoginOutlined rev={true} />
 				</Link>
 			</div>
 			<div className="w-72 bg-gray-800 rounded mt-2 px-2 py-6">
@@ -85,7 +85,9 @@ function Signup() {
 							Nama Lengkap
 						</label>
 						<Input
-							onChange={(text: any) => setCred("fullName", text.target.value)}
+							onChange={(text: any) =>
+								setCred("fullName", text.target.value)
+							}
 							id="fullname"
 							name="fullname"
 						/>
@@ -95,7 +97,9 @@ function Signup() {
 							Username
 						</label>
 						<Input
-							onChange={(text: any) => setCred("username", text.target.value)}
+							onChange={(text: any) =>
+								setCred("username", text.target.value)
+							}
 							id="username"
 							name="username"
 						/>
@@ -105,7 +109,9 @@ function Signup() {
 							Password
 						</label>
 						<Input.Password
-							onChange={(text: any) => setCred("password", text.target.value)}
+							onChange={(text: any) =>
+								setCred("password", text.target.value)
+							}
 							id="password"
 							name="password"
 						/>
@@ -115,7 +121,9 @@ function Signup() {
 							Konfirmasi Password
 						</label>
 						<Input.Password
-							onChange={(text: any) => setPasswordConf(text.target.value)}
+							onChange={(text: any) =>
+								setPasswordConf(text.target.value)
+							}
 							id="password-conf"
 							name="password-conf"
 						/>
@@ -124,7 +132,11 @@ function Signup() {
 						onClick={handleLogin}
 						className="mt-8 w-full bg-gray-100 text-gray-700 rounded-full py-2"
 					>
-						{!isLoading ? <p>Register</p> : <LoadingOutlined />}
+						{!isLoading ? (
+							<p>Register</p>
+						) : (
+							<LoadingOutlined rev={true} />
+						)}
 					</button>
 				</div>
 			</div>
