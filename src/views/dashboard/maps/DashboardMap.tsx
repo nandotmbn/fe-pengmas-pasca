@@ -14,7 +14,7 @@ function DashboardMap() {
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 			/>
-			{positionData.map(position => (
+			{positionData.map((position: any) => (
 				<Marker key={position.id} position={[position.lat, position.lng]}>
 					<Popup>
 						{position.name}

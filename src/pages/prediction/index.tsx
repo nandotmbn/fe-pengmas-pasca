@@ -1,10 +1,14 @@
-import Prediction from "@/views/prediction/Prediction";
-import Head from "next/head";
+import dynamic from "next/dynamic";
+
+const DynamicPrediction = dynamic(() => import('@/views/prediction/Prediction'), {
+  loading: () => <p>Loading...</p>,
+	ssr: false
+})
 
 export default function PredictionForm() {
 	return (
 		<>
-			<Prediction />
+			<DynamicPrediction />
 		</>
 	);
 }

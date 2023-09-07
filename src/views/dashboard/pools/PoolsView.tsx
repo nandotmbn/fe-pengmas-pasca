@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import MonitoringPanel from "./partials/MonitoringPanel";
 import SamplingPanel from "./partials/SamplingPanel";
-import { QrReader } from "react-qr-reader";
 
 interface IPonds {
 	_id: string;

@@ -91,11 +91,11 @@ function HeaderMainLayout() {
 							Kontak
 						</div>
 					</a>
-					<a href="/prediction" className="flex-1">
+					<Link href="/prediction" className="flex-1">
 						<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
 							Prediksi
 						</div>
-					</a>
+					</Link>
 				</div>
 				{userData?.username ? (
 					<div className="flex flex-row gap-2 flex-1 justify-end">
@@ -123,7 +123,7 @@ function HeaderMainLayout() {
 			</div>
 			<div className="flex md:hidden text-2xl relative -top-1">
 				<button onClick={showDrawer}>
-					<MenuFoldOutlined />
+					<MenuFoldOutlined rev={undefined} />
 				</button>
 			</div>
 			<Drawer
@@ -151,11 +151,11 @@ function HeaderMainLayout() {
 								Kontak
 							</div>
 						</a>
-						<a href="/prediction" className="flex-1 border-b-2">
+						<Link href="/prediction" className="flex-1 border-b-2">
 							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white">
 								Prediksi
 							</div>
-						</a>
+						</Link>
 					</div>
 					{userData?.username ? (
 						<div className="flex flex-col gap-2 flex-1 justify-end w-full">
