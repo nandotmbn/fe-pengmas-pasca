@@ -92,7 +92,7 @@ function PondsById() {
 				<div className="flex flex-row items-center justify-between md:justify-start w-full gap-4">
 					<Link href="/dashboard/ponds">
 						<button className="text-2xl font-bold text-red-600">
-							<ArrowLeftOutlined rev={undefined} />
+							<ArrowLeftOutlined rev={true}/>
 						</button>
 					</Link>
 					<div className="text-right md:text-left">
