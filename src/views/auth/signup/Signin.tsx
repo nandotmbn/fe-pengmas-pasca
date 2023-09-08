@@ -62,7 +62,7 @@ function Signin() {
 					href="/auth/signup"
 					className="items-center flex flex-row gap-2 items-center text-blue-800"
 				>
-					<p>Register</p> <LoginOutlined />
+					<p>Register</p> <LoginOutlined rev={undefined} />
 				</Link>
 			</div>
 			<div className="w-72 px-2 py-6 bg-gray-800 rounded mt-2">
@@ -99,7 +99,7 @@ function Signin() {
 						onClick={handleLogin}
 						className="mt-8 w-full bg-gray-100 text-gray-700 rounded-full py-2"
 					>
-						{!isLoading ? <p>Login</p> : <LoadingOutlined />}
+						{!isLoading ? <p>Login</p> : <LoadingOutlined rev={undefined} />}
 					</button>
 				</div>
 			</div>
