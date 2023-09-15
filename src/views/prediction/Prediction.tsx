@@ -13,11 +13,11 @@ const Prediction = () => {
 		e.preventDefault();
 		let prediksiForm = document.getElementById("prediksiForm");
 
-		var cityIdElement = document.getElementById('city_id');
-		var doOksigenElement = document.getElementById('do_oksigen');
-		var phElement = document.getElementById('ph');
-		var salinitasElement = document.getElementById('salinitas');
-		var suhuElement = document.getElementById('suhu');
+		var cityIdElement: any = document.getElementById('city_id');
+		var doOksigenElement: any = document.getElementById('do_oksigen');
+		var phElement: any = document.getElementById('ph');
+		var salinitasElement: any = document.getElementById('salinitas');
+		var suhuElement: any = document.getElementById('suhu');
 
 		if (doOksigenElement != null && phElement != null && suhuElement != null && salinitasElement != null && cityIdElement != null) {
 			var doOksigenValue = doOksigenElement.value;

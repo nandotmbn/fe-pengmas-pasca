@@ -13,11 +13,9 @@ const AlertBadge: React.FC<AlertBadgeProps> = ({ value, lowerBound, upperBound }
 	const isAbove = value > upperBound;
 	const isNull = value === 0;
 
-	if (isNull){
+	if (isNull) {
 		return (
-			<span>
-				{value}
-			</span>
+			<></>
 		);
 	}
 

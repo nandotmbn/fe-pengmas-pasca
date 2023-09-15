@@ -1,9 +1,6 @@
 import Head from "next/head";
-import { Inter } from "@next/font/google";
 import DashboardProfile from "@/views/dashboard/profile/DashboardProfile";
 import DashboardLayout from "@/layouts/DashboardLayout";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Profle() {
 	return (
