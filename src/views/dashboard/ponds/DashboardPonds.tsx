@@ -126,6 +126,7 @@ function DashboardPonds() {
 						<label className="text-sm w-24" htmlFor="prov_list">
 							Pilih Propinsi
 						</label>
+						DAI
 						<Select
 							value={selectedProv}
 							defaultValue="Pilih Provinsi"

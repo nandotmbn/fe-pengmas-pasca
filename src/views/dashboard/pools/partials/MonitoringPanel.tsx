@@ -123,7 +123,7 @@ function MonitoringPanel(props: IMonitoringPanel) {
 			newestTime: "false",
 		}).then((res) => {
 			if (!res) return [];
-
+			console.log(res);
 			setRecords(res.data);
 			return res.data.map((datum: any, i: number) => {
 				const time =

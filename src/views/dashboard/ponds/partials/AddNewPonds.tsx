@@ -99,8 +99,9 @@ function AddNewPonds(props: IAddNewPonds) {
 				onCancel={() => setModalOpen(false)}
 			>
 				<div className="mb-4">
-					<div>
-						<label htmlFor="prov_list">Pilih Provinsi</label>
+					<div  className="mb-4">
+						<label className="mr-4" htmlFor="prov_list">Pilih Provinsi</label>
+
 						<Select
 							defaultValue="Pilih Provinsi"
 							style={{ width: 200 }}
@@ -112,7 +113,7 @@ function AddNewPonds(props: IAddNewPonds) {
 					</div>
 					{selectedProv && (
 						<div>
-							<label htmlFor="city_list">Pilih Kota</label>
+							<label className="mr-4" htmlFor="city_list">Pilih Kota</label>
 							<Select
 								defaultValue="Pilih Kota"
 								value={selectedCity}

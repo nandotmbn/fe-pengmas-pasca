@@ -107,6 +107,26 @@ function Developer() {
 							/>
 							<p className="text-center text-xs md:text-sm xl:text-base">Santi</p>
 						</div>
+						<div>
+							<Image
+								className="cursor-pointer rounded-full"
+								src="/images/ainul.jpg"
+								alt="Santi"
+								width={800}
+								height={800}
+							/>
+							<p className="text-center text-xs md:text-sm xl:text-base">Ainul Mukhlasin</p>
+						</div>
+						<div>
+							<Image
+								className="cursor-pointer rounded-full"
+								src="/images/khoirul.jpg"
+								alt="Santi"
+								width={800}
+								height={800}
+							/>
+							<p className="text-center text-xs md:text-sm xl:text-base">Ahmad Musafir Khoirul</p>
+						</div>
 					</div>
 				</div>
 			</div>
