@@ -70,7 +70,9 @@ function HeaderMainLayout() {
 							width={40}
 							height={300}
 						/>
-						<h1 className="font-bold text-xs">PENS Aquaculture Technology</h1>
+						<h1 className="font-bold text-xs">
+							PENS Aquaculture Technology
+						</h1>
 					</div>
 				</Link>
 			</div>
@@ -99,11 +101,16 @@ function HeaderMainLayout() {
 				</div>
 				{userData?.username ? (
 					<div className="flex flex-row gap-2 flex-1 justify-end">
-						<Link href="/dashboard" className="flex-1 flex-row flex">
+						<Link
+							href="/dashboard"
+							className="flex-1 flex-row flex"
+						>
 							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
 								{userData.username}
 							</div>
-							<span className="material-symbols-outlined">account_circle</span>
+							<span className="material-symbols-outlined">
+								account_circle
+							</span>
 						</Link>
 					</div>
 				) : (
@@ -123,7 +130,7 @@ function HeaderMainLayout() {
 			</div>
 			<div className="flex md:hidden text-2xl relative -top-1">
 				<button onClick={showDrawer}>
-					<MenuFoldOutlined rev={undefined} />
+					<MenuFoldOutlined rev={true} />
 				</button>
 			</div>
 			<Drawer
@@ -159,7 +166,10 @@ function HeaderMainLayout() {
 					</div>
 					{userData?.username ? (
 						<div className="flex flex-col gap-2 flex-1 justify-end w-full">
-							<Link href="/dashboard" className="flex-1 flex-row flex justify-end">
+							<Link
+								href="/dashboard"
+								className="flex-1 flex-row flex justify-end"
+							>
 								<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
 									{userData.username}
 								</div>
@@ -170,12 +180,18 @@ function HeaderMainLayout() {
 						</div>
 					) : (
 						<div className="flex flex-col gap-2 flex-1 justify-end w-full">
-							<Link href="/auth/signin" className="flex-1 border-b-2">
+							<Link
+								href="/auth/signin"
+								className="flex-1 border-b-2"
+							>
 								<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white">
 									Login
 								</div>
 							</Link>
-							<Link href="/auth/signup" className="flex-1 border-b-2">
+							<Link
+								href="/auth/signup"
+								className="flex-1 border-b-2"
+							>
 								<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white">
 									Register
 								</div>
