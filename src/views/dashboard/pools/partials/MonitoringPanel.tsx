@@ -52,9 +52,8 @@ function MonitoringPanel(props: IMonitoringPanel) {
 
 		const thisDate = new Date(Date.now());
 
-		const date = `${thisDate.getFullYear()}-${
-			thisDate.getMonth() + 1
-		}-${thisDate.getDate()}`;
+		const date = `${thisDate.getFullYear()}-${thisDate.getMonth() + 1
+			}-${thisDate.getDate()}`;
 
 		const startOfDay = new Date(new Date(date).toLocaleString()).getTime();
 
@@ -237,6 +236,14 @@ function MonitoringPanel(props: IMonitoringPanel) {
 						salinity={salinity}
 						pH={pH}
 					/>
+					<div className="mt-10 flex items-center">
+						<div className="w-4 h-4 bg-black rounded-full mr-2"></div>
+						<span className="text-sm mr-4">Normal</span>
+						<div className="w-4 h-4 bg-blue-500 rounded-full mr-2"></div>
+						<span className="text-sm mr-4">Dibawah Batas Bawah</span>
+						<div className="w-4 h-4 bg-red-500 rounded-full mr-2"></div>
+						<span className="text-sm">Diatas Batas Atas</span>
+					</div>
 					<div className="mt-4 overflow-scroll md:overflow-hidden">
 						<RecordTable records={records} />
 					</div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
-import AlertBadge from "../AlertBadge.tsx";
+// import AlertBadge from "../AlertBadge.tsx";
 
 import {
 	Chart as ChartJS,
@@ -79,17 +79,8 @@ const RecordChart: React.FC<RecordChartProps> = ({
 		labels: labels,
 	};
 
-	return (
-		<div className="record-chart-container h-96">
-			<Line className="max-h-fit" options={options} data={data} />
-			<div className="alert-badges">
-				<AlertBadge value={temp[temp.length - 1]} lowerBound={26} upperBound={32} />
-				<AlertBadge value={oxygen[oxygen.length - 1]} lowerBound={4} upperBound={100} />
-				<AlertBadge value={salinity[salinity.length - 1]} lowerBound={0} upperBound={32} />
-				<AlertBadge value={pH[pH.length - 1]} lowerBound={7} upperBound={8} />
-			</div>
-		</div>
-	);
+	return <Line className="max-h-96" options={options} data={data} />;
+
 };
 
 export default RecordChart;
