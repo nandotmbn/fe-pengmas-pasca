@@ -36,7 +36,7 @@ function DashboardProfile() {
 		navigator.clipboard.writeText(userData?.apiKey as string);
 
 		message.info({
-			content: "API Key: " + userData?.apiKey + " has beed copied!",
+			content: "User ID: " + userData?.apiKey + " has beed copied!",
 		});
 	}
 
@@ -81,7 +81,7 @@ function DashboardProfile() {
 				)}
 			</div>
 			<div className="mt-2">
-				<p className="text-xs font-bold">API Key</p>
+				<p className="text-xs font-bold">User ID</p>
 				{userData?.apiKey ? (
 					<div className="flex items-center justify-start gap-4">
 						<p className="text-base font-light">{userData?.apiKey}</p>
