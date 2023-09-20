@@ -124,7 +124,7 @@ function PoolsView() {
 				<div className="flex flex-row items-center justify-between md:justify-start w-full gap-4">
 					<Link href={`/dashboard/ponds/${ponds_id}`}>
 						<button className="text-2xl font-bold text-red-600">
-							<ArrowLeftOutlined rev={undefined} />
+							<ArrowLeftOutlined rev="string" />
 						</button>
 					</Link>
 					<div className="text-right md:text-left">

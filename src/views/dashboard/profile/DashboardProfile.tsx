@@ -86,7 +86,7 @@ function DashboardProfile() {
 					<div className="flex items-center justify-start gap-4">
 						<p className="text-base font-light">{userData?.apiKey}</p>
 						<button onClick={buttonCopy} className="text-gray-500">
-							<CopyOutlined rev={undefined} />
+							<CopyOutlined rev="string" />
 						</button>
 					</div>
 				) : (

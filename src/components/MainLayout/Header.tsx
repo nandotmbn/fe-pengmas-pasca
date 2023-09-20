@@ -130,7 +130,7 @@ function HeaderMainLayout() {
 			</div>
 			<div className="flex md:hidden text-2xl relative -top-1">
 				<button onClick={showDrawer}>
-					<MenuFoldOutlined  />
+					<MenuFoldOutlined rev="string" />
 				</button>
 			</div>
 			<Drawer
