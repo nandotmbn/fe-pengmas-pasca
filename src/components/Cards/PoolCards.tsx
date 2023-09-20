@@ -55,13 +55,13 @@ function PoolCards(props: IPoolsCard) {
 			from: "",
 			to: "",
 			isNotify: false,
-			limit: 1,
+			limit: 9999,
 			page: 1,
 			poolsId: props._id,
 			newestTime: "true",
 		}).then((res) => {
 			if (!res) return;
-			return setRecentMonitoring(res.data[0]);
+			return setRecentMonitoring(res.data[res.data.length - 1]);
 		});
 	};
 	const getSampling = async () => {

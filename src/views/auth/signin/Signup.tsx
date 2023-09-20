@@ -67,7 +67,7 @@ function Signup() {
 					href="/auth/signin"
 					className="flex flex-row gap-2 items-center text-blue-800"
 				>
-					<p>Login</p> <LoginOutlined rev={true} />
+					<p>Login</p> <LoginOutlined  />
 				</Link>
 			</div>
 			<div className="w-72 bg-gray-800 rounded mt-2 px-2 py-6">
@@ -135,7 +135,7 @@ function Signup() {
 						{!isLoading ? (
 							<p>Register</p>
 						) : (
-							<LoadingOutlined rev={true} />
+							<LoadingOutlined  />
 						)}
 					</button>
 				</div>

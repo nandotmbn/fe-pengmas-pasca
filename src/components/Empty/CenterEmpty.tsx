@@ -5,7 +5,6 @@ function CenterEmpty({ message }: { message: string }) {
 	return (
 		<div className="h-full w-full flex flex-col items-center justify-center mt-4">
 			<ExclamationCircleOutlined
-				rev={true}
 				className="font-bold text-4xl text-gray-300"
 			/>
 			<p className="font-bold text-2xl text-gray-300 text-center">
