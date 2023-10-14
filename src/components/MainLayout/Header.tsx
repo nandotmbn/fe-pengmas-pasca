@@ -98,6 +98,14 @@ function HeaderMainLayout() {
 							Prediksi
 						</div>
 					</Link>
+					<a
+						href="https://drive.google.com/file/d/1cwFcYk5OHVnZrSe801mK4YVA8pEljbET/view?usp=sharing"
+						className="flex-1"
+					>
+						<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center whitespace-nowrap">
+							Buku Panduan
+						</div>
+					</a>
 				</div>
 				{userData?.username ? (
 					<div className="flex flex-row gap-2 flex-1 justify-end">
@@ -163,6 +171,14 @@ function HeaderMainLayout() {
 								Prediksi
 							</div>
 						</Link>
+						<a
+							href="https://drive.google.com/file/d/1cwFcYk5OHVnZrSe801mK4YVA8pEljbET/view?usp=sharing"
+							className="flex-1 border-b-2"
+						>
+							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white whitespace-nowrap">
+								Buku Panduan
+							</div>
+						</a>
 					</div>
 					{userData?.username ? (
 						<div className="flex flex-col gap-2 flex-1 justify-end w-full">
