@@ -21,7 +21,7 @@ interface IRecord {
 
 interface IPoolsCard {
 	_id: string;
-	pondsId: string,
+	pondsId: string;
 	poolsName: string;
 	listRefresher: Function;
 }
@@ -41,9 +41,9 @@ function PoolCards(props: IPoolsCard) {
 	});
 
 	const handleDelete = async () => {
-		return await Ponds.deletePondsById({
-			isNotify: false,
-			pondsId: props._id,
+		return await Pools.deletePoolById({
+			isNotify: true,
+			poolId: props._id,
 		}).then((res) => {
 			if (!res) return;
 			return props.listRefresher();
@@ -124,7 +124,15 @@ function PoolCards(props: IPoolsCard) {
 				</div>
 			</div>
 			<div className="flex flex-row gap-4 w-full">
-				<Link className="flex-1" href={"/dashboard/ponds/" + props.pondsId + "/pools/" + props._id}>
+				<Link
+					className="flex-1"
+					href={
+						"/dashboard/ponds/" +
+						props.pondsId +
+						"/pools/" +
+						props._id
+					}
+				>
 					<button className="w-full py-2 bg-blue-600 text-white rounded-xl border-2 border-white">
 						Buka
 					</button>
