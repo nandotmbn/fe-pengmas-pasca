@@ -42,10 +42,15 @@ function AddNewPools(props: IAddNewPools) {
 			isNotify: true,
 		})
 			.then((res) => {
-				if (!res) return setModalOpen(false);
+				if (!res) {
+					setQueryName("");
+					return setModalOpen(false);
+				}
 			})
 			.finally(() => {
 				setModalOpen(false);
+				setQueryName("");
+				props.listRefresher();
 			}),
 	];
 
@@ -87,6 +92,7 @@ function AddNewPools(props: IAddNewPools) {
 					<Input
 						id="pond_name"
 						name="pond_name"
+						value={queryName}
 						onChange={(text) => setQueryName(text.target.value)}
 					/>
 				</div>
