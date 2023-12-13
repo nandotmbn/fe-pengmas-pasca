@@ -9,7 +9,7 @@ interface IMainLayout {
 	children: JSX.Element;
 }
 
-function DashboardLayout({ children }: IMainLayout) {
+function DashboardLayout({ children }: Readonly<IMainLayout>) {
 	const router = useRouter();
 	const checkLoggedIn = () => {
 		const isLoggedIn = cookiesHandler.getCookie("access_token");

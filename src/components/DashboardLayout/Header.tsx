@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const DashboardHeader = () => {
 	const router = useRouter();
@@ -28,7 +28,9 @@ const DashboardHeader = () => {
 						width={40}
 						height={300}
 					/>
-					<h1 className="font-bold text-xs">PENS Aquaculture Technology</h1>
+					<h1 className="font-bold text-xs">
+						PENS Aquaculture Technology
+					</h1>
 				</Link>
 			</div>
 			<ul className="w-full flex flex-row items-center justify-evenly text-xs mt-4 gap-4">
